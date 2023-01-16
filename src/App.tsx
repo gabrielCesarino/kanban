@@ -1,3 +1,4 @@
+import { Sidebar } from './components/Sidebar';
 import { GlobalStyle } from './GlobalStyle';
 
 export function App() {
@@ -5,7 +6,7 @@ export function App() {
 	return (
 		<>
 			<GlobalStyle />
-			<h1>kanban</h1>
+			<Sidebar />
 		</>
 	);
 }
