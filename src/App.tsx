@@ -1,7 +1,12 @@
+import { GlobalStyle } from './GlobalStyle';
+
 export function App() {
 
 	return (
-		<h1>kanban</h1>
+		<>
+			<GlobalStyle />
+			<h1>kanban</h1>
+		</>
 	);
 }
 
