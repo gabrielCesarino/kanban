@@ -4,7 +4,8 @@ export const AsideContainer = styled.aside`
 	background: var(--white);
 	display: flex;
 	flex-direction: column;
-	max-width: 18.75rem;
+	min-width: 16rem;
+	height: calc(100vh - 5rem);
 	align-items: flex-start;
 	border-right: 1px solid rgba(100, 100, 100, 0.2);
 	padding: 2.5rem 0;
@@ -13,17 +14,11 @@ export const AsideContainer = styled.aside`
 		width: 12rem;
 		padding: 0 2rem;
 	}
-
-	&.sidebarHide {
-		border-bottom: 1px solid rgba(100, 100, 100, 0.2);
-	}
-
 `;
 
 export const InteractionsContainer = styled.div`
-	margin-top: 3.375rem;
 	width: 100%;
-	height: calc(100vh - 10rem);
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

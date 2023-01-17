@@ -4,14 +4,32 @@ export const HeaderContainer = styled.header`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 2rem;
+	height: 5rem;
+	padding-right: 2rem;
 	background-color: var(--white);
 	border-bottom: 1px solid rgba(100, 100, 100, 0.2);
 
-	& > strong {
+	& > div {
+		display: flex;
+		align-items: center;
+		height: 100%;
+	}
+
+	div > strong {
 		color: var(--gray-800);
 		font-size: 1.5rem;
+		padding: 2rem;
 	}
+`;
+
+export const LogoContainer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	min-width: 16rem;
+	border-right: 1px solid rgba(100, 100, 100, 0.2);
+	padding-left: 2rem;
+	height: 100%;
 `;
 
 export const ButtonsContainer = styled.div`

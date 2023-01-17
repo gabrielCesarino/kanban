@@ -10,7 +10,6 @@ import {
 	ShowSidebarContainer
 } from './styles';
 
-import kanbanLogo from '../../assets/logo-dark.svg';
 import boardIcon from '../../assets/icon-board.svg';
 import darkIcon from '../../assets/icon-dark-theme.svg';
 import lightIcon from '../../assets/icon-light-theme.svg';
@@ -27,7 +26,6 @@ export function Sidebar() {
 
 	return (
 		<AsideContainer className={hideSidebar ? 'sidebarHide' : ''} >
-			<img src={kanbanLogo} />
 			{
 				!hideSidebar ?
 					<InteractionsContainer>
