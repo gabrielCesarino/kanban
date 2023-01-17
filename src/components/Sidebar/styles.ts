@@ -14,6 +14,10 @@ export const AsideContainer = styled.aside`
 		width: 12rem;
 		padding: 0 2rem;
 	}
+
+	&.sidebarHide {
+		min-width: 0;
+	}
 `;
 
 export const InteractionsContainer = styled.div`
