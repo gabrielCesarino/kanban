@@ -8,7 +8,7 @@ export const AsideContainer = styled.aside`
 	height: 100vh;
 	align-items: flex-start;
 	border-right: 1px solid rgba(100, 100, 100, 0.2);
-	padding: 2rem 0 ;
+	padding: 2rem 0;
 
 	& > img {
 		width: 10rem;
@@ -25,9 +25,9 @@ export const InteractionsContainer = styled.div`
 	justify-content: space-between;
 
 	& > div {
-		padding-left: 2rem;
 
 		small {
+			padding-left: 2rem;
 			font-size: 0.75rem;
 			font-weight: bold;
 			text-transform: uppercase;
@@ -48,6 +48,7 @@ export const InteractionsContainer = styled.div`
 
 export const BoardsList = styled.div`
 	margin-top: 1rem;
+	padding-right: 2rem;
 `;
 
 export const Board = styled.div`
@@ -56,6 +57,7 @@ export const Board = styled.div`
 	padding: 1rem 0;
 	display: flex;
 	align-items: center;
+	padding-left: 2rem;
 
 	&.createButton {
 		color: var(--purple-700);
@@ -71,6 +73,16 @@ export const Board = styled.div`
 
 	&:hover {
 		cursor: pointer;
+	}
+
+	&.activeBoard {
+		background: var(--purple-700);
+		border-radius: 0 40px 40px 0;
+		color: var(--white);
+
+		> img {
+			fill: var(--white)
+		}
 	}
 `;
 
@@ -123,7 +135,7 @@ export const ToggleContainer = styled.div`
 	}
 
 	label:active:after {
-		width: 1rem;
+		width: 1.5rem;
 	}
 `;
 

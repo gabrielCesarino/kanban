@@ -22,7 +22,7 @@ export function Sidebar() {
 				<div>
 					<small>All boards (3)</small>
 					<BoardsList>
-						<Board>
+						<Board className="activeBoard">
 							<img src={boardIcon} />
 							<span>Platform Launch</span>
 						</Board>
