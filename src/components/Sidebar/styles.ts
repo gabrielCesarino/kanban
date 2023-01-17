@@ -5,7 +5,6 @@ export const AsideContainer = styled.aside`
 	display: flex;
 	flex-direction: column;
 	max-width: 18.75rem;
-	height: ;
 	align-items: flex-start;
 	border-right: 1px solid rgba(100, 100, 100, 0.2);
 	padding: 2.5rem 0;
@@ -146,10 +145,42 @@ export const HideContainer = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 1rem;
+	margin-top: 1rem;
+	transition: all 0.2s;
 
 	& > small {
 		font-weight: bold;
 		color: var(--gray-400);
+	}
+
+	&:hover{
+		cursor: pointer;
+
+		> small {
+			color: var(--purple-300);
+		}
+	}
+`;
+
+export const ShowSidebarContainer = styled.div`
+	position: absolute;
+	bottom: 10rem;
+
+	button {
+		background: var(--purple-700);
+		border: 0;
+		border-radius: 0 40px 40px 0;
+		padding: 0.75rem;
+		transition: background-color 0.2s;
+
+		& > img {
+			margin-right: 0.25rem;
+		}
+
+		&:hover {
+			cursor: pointer;
+			background-color: var(--purple-300);
+		}
 	}
 `;
 
