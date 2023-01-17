@@ -165,7 +165,7 @@ export const HideContainer = styled.div`
 
 export const ShowSidebarContainer = styled.div`
 	position: absolute;
-	bottom: 10rem;
+	bottom: 3rem;
 
 	button {
 		background: var(--purple-700);

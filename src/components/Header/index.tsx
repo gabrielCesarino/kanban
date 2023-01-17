@@ -1,9 +1,10 @@
 import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
+import { Board as BoardType } from '../../types/Board';
 
 import kanbanLogo from '../../assets/logo-dark.svg';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 
-export function Header() {
+export function Header(props: BoardType) {
 	return(
 		<HeaderContainer>
 			<div>
@@ -14,7 +15,7 @@ export function Header() {
 			</div>
 			<ButtonsContainer>
 				<button>+ Add new task</button>
-				<img src={dotsIcon} alt="Board settings" />
+				<img src={dotsIcon} title="Board settings" />
 			</ButtonsContainer>
 		</HeaderContainer>
 	);
