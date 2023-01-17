@@ -26,7 +26,7 @@ export function Sidebar() {
 	}
 
 	return (
-		<AsideContainer>
+		<AsideContainer className={hideSidebar ? 'sidebarHide' : ''} >
 			<img src={kanbanLogo} />
 			{
 				!hideSidebar ?

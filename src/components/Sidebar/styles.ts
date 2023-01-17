@@ -14,7 +14,9 @@ export const AsideContainer = styled.aside`
 		padding: 0 2rem;
 	}
 
-	border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+	&.sidebarHide {
+		border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+	}
 
 `;
 
