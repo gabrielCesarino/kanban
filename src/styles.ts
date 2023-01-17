@@ -5,5 +5,5 @@ export const AppContainer = styled.div`
 
 	main {
 		flex: 1;
-	}
+	};
 `;

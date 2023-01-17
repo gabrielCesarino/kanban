@@ -5,21 +5,24 @@ export const AsideContainer = styled.aside`
 	display: flex;
 	flex-direction: column;
 	max-width: 18.75rem;
-	height: 100vh;
+	height: ;
 	align-items: flex-start;
 	border-right: 1px solid rgba(100, 100, 100, 0.2);
-	padding: 2rem 0;
+	padding: 2.5rem 0;
 
 	& > img {
-		width: 10rem;
-		padding-left: 2rem;
+		width: 12rem;
+		padding: 0 2rem;
 	}
+
+	border-bottom: 1px solid rgba(100, 100, 100, 0.2);
+
 `;
 
 export const InteractionsContainer = styled.div`
 	margin-top: 3.375rem;
 	width: 100%;
-	height: 100%;
+	height: calc(100vh - 10rem);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;

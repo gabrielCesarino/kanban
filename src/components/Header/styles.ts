@@ -25,6 +25,7 @@ export const ButtonsContainer = styled.div`
 		border: 0;
 		border-radius: 24px;
 		padding: 0.75rem 1rem;
+		font-weight: bold;
 
 		&:hover{
 			cursor: pointer;
