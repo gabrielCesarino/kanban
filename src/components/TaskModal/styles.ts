@@ -60,6 +60,11 @@ export const Subtask = styled.div`
 	padding: 0.75rem;
 	border-radius: 4px;
 
+	input[type=checkbox]:checked + span {
+		text-decoration-line: line-through;
+		color: var(--gray-400);
+	}
+
 	& > span {
 		color: var(--gray-800);
 		font-size: 0.75rem;

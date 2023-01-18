@@ -10,7 +10,7 @@ interface TaskProps {
 export function Task({ task }: TaskProps) {
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
-	function handleToggleTaskModal() {
+	function handleOpenTaskModal() {
 		setIsTaskModalOpen(!isTaskModalOpen);
 	}
 
@@ -24,7 +24,7 @@ export function Task({ task }: TaskProps) {
 
 	return (
 		<>
-			<TaskContainer onClick={handleToggleTaskModal}>
+			<TaskContainer onClick={handleOpenTaskModal}>
 				<strong>{task.title}</strong>
 				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
 			</TaskContainer>

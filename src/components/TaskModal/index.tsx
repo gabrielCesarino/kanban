@@ -26,7 +26,7 @@ export function TaskModal({ isTaskModalOpen, task, subtasksCompleted }: TaskModa
 							{task.subtasks.map((subtask) => {
 								return (
 									<Subtask key={subtask.title}>
-										<input type="checkbox" name="1" id="1" />
+										<input checked={subtask.isCompleted} type="checkbox" name="1" id="1" />
 										<span>{subtask.title}</span>
 									</Subtask>
 								);
