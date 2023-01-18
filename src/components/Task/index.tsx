@@ -34,7 +34,7 @@ export function Task({ task }: TaskProps) {
 				<strong>{task.title}</strong>
 				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
 			</TaskContainer>
-			{isTaskModalOpen && <Modal handleCloseTaskModal={closeTaskModal}>
+			{isTaskModalOpen && <Modal handleCloseModal={closeTaskModal}>
 				<div onClick={e => e.stopPropagation()}>
 					<header>
 						<strong>{task.title}</strong>

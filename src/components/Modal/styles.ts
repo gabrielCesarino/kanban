@@ -10,6 +10,7 @@ export const ModalContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	background: rgba(0, 0, 0, 0.5);
+	z-index: 999;
 
 	& > div {
 		width: 30rem;

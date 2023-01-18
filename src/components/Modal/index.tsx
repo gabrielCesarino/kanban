@@ -2,27 +2,27 @@ import { ModalContainer } from './styles';
 import { useEffect } from 'react';
 
 interface TaskModalProps{
-	handleCloseTaskModal: () => void;
+	handleCloseModal: () => void;
 	children: JSX.Element
 }
 
-export function Modal({ handleCloseTaskModal, children}: TaskModalProps) {
+export function Modal({ handleCloseModal, children}: TaskModalProps) {
 	useEffect(() => {
 		document.addEventListener('keyup', (e) => {
 			if(e.key === 'Escape'){
-				handleCloseTaskModal();
+				handleCloseModal();
 			}
 		});
 
 		return () => {
-			document.removeEventListener('keyup', () => handleCloseTaskModal);
+			document.removeEventListener('keyup', () => handleCloseModal);
 		};
 	}, []);
 
 
 	return(
 		<>
-			<ModalContainer onClick={handleCloseTaskModal}>
+			<ModalContainer onClick={handleCloseModal}>
 				{children}
 			</ModalContainer>
 		</>
