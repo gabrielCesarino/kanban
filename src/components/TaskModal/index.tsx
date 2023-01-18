@@ -1,11 +1,14 @@
 import { ModalContainer, SubtasksContainer, Subtask, StatusContainer } from './styles';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
+import { Task as TaskType } from '../../types/Task';
 
 interface TaskModalProps{
 	isTaskModalOpen: boolean;
+	task: TaskType;
+	subtasksCompleted: number;
 }
 
-export function TaskModal({ isTaskModalOpen }: TaskModalProps) {
+export function TaskModal({ isTaskModalOpen, task, subtasksCompleted }: TaskModalProps) {
 
 
 	return(
@@ -13,27 +16,27 @@ export function TaskModal({ isTaskModalOpen }: TaskModalProps) {
 			{isTaskModalOpen && <ModalContainer>
 				<div>
 					<header>
-						<strong>Research pricing points of various competitors and trial different business models</strong>
+						<strong>{task.title}</strong>
 						<img src={dotsIcon} alt="Task settings" />
 					</header>
-					<small>We know what we're planning to build for version one. Now we need to finalise the first pricing model we'll use. Keep iterating the subtasks until we have a coherent proposition.</small>
+					<small>{task.description}</small>
 					<SubtasksContainer>
-						<span>Subtasks (2 of 3)</span>
+						<span>Subtasks ({subtasksCompleted} of {task.subtasks.length})</span>
 						<ul>
-							<Subtask>
-								<input type="checkbox" name="1" id="1" />
-								<span>Talk to potential customers about our proposed solution and ask for fair price expectancy</span>
-							</Subtask>
-							<Subtask>
-								<input type="checkbox" name="1" id="1" />
-								<span>Talk to potential customers about our proposed solution and ask for fair price expectancy</span>
-							</Subtask>
+							{task.subtasks.map((subtask) => {
+								return (
+									<Subtask key={subtask.title}>
+										<input type="checkbox" name="1" id="1" />
+										<span>{subtask.title}</span>
+									</Subtask>
+								);
+							})}
 						</ul>
 					</SubtasksContainer>
 					<StatusContainer>
 						<span>Current status</span>
 						<select>
-							<option>Doing</option>
+							<option selected>{task.status}</option>
 						</select>
 					</StatusContainer>
 				</div>

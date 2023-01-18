@@ -28,7 +28,7 @@ export function Task({ task }: TaskProps) {
 				<strong>{task.title}</strong>
 				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
 			</TaskContainer>
-			<TaskModal isTaskModalOpen={isTaskModalOpen}/>
+			<TaskModal isTaskModalOpen={isTaskModalOpen} task={task} subtasksCompleted={subtasksCompleted}/>
 		</>
 	);
 }
