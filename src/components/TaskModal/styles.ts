@@ -9,7 +9,7 @@ export const ModalContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: rgba(0, 0, 0, 0.05);
+	background: rgba(0, 0, 0, 0.2);
 
 	& > div {
 		max-width: 30rem;
@@ -89,5 +89,9 @@ export const StatusContainer = styled.div`
 		border: 1px solid var(--gray-300);
 
 		font-size: 0.875rem;
+
+		&:focus-within{
+			outline: 1px solid var(--gray-400);
+		}
 	}
 `;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Task as TaskType } from '../../types/Task';
 import { TaskModal } from '../TaskModal';
 import { TaskContainer } from './styles';
@@ -7,6 +8,11 @@ interface TaskProps {
 }
 
 export function Task({ task }: TaskProps) {
+	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
+	function handleToggleTaskModal() {
+		setIsTaskModalOpen(!isTaskModalOpen);
+	}
 
 	const subtasksCompleted = task.subtasks.reduce((acc, subtask) => {
 		if(subtask.isCompleted === true){
@@ -18,11 +24,11 @@ export function Task({ task }: TaskProps) {
 
 	return (
 		<>
-			<TaskContainer>
+			<TaskContainer onClick={handleToggleTaskModal}>
 				<strong>{task.title}</strong>
 				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
 			</TaskContainer>
-			<TaskModal />
+			<TaskModal isTaskModalOpen={isTaskModalOpen}/>
 		</>
 	);
 }
