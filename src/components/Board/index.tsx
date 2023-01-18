@@ -1,7 +1,8 @@
 import { Board as BoardType } from '../../types/Board';
 import { Task as TaskType } from '../../types/Task';
+import { Task } from '../Task';
 
-import { BoardContainer, BoardCollumn, Task } from './styles';
+import { BoardContainer, BoardCollumn } from './styles';
 
 interface BoardProps {
 	boards: BoardType[];
@@ -19,13 +20,9 @@ export function Board({ boards, selectedBoard }: BoardProps) {
 						<small>{column.name} ({column.tasks.length})</small>
 						{column.tasks.map((task: TaskType) => {
 							return (
-								<Task key={task.title}>
-									<strong>{task.title}</strong>
-									<span>0 of {task.subtasks.length} subtasks</span>
-								</Task>
+								<Task key={task.title} task={task}/>
 							);
 						})}
-
 					</BoardCollumn>
 				);
 			})}
