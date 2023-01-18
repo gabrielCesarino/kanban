@@ -11,7 +11,11 @@ export function Task({ task }: TaskProps) {
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
 	function handleOpenTaskModal() {
-		setIsTaskModalOpen(!isTaskModalOpen);
+		setIsTaskModalOpen(true);
+	}
+
+	function closeTaskModal() {
+		setIsTaskModalOpen(false);
 	}
 
 	const subtasksCompleted = task.subtasks.reduce((acc, subtask) => {
@@ -28,7 +32,7 @@ export function Task({ task }: TaskProps) {
 				<strong>{task.title}</strong>
 				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
 			</TaskContainer>
-			<TaskModal isTaskModalOpen={isTaskModalOpen} task={task} subtasksCompleted={subtasksCompleted}/>
+			<TaskModal isTaskModalOpen={isTaskModalOpen} task={task} subtasksCompleted={subtasksCompleted} handleCloseTaskModal={closeTaskModal}/>
 		</>
 	);
 }

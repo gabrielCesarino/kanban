@@ -1,20 +1,33 @@
 import { ModalContainer, SubtasksContainer, Subtask, StatusContainer } from './styles';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 import { Task as TaskType } from '../../types/Task';
+import { useEffect } from 'react';
 
 interface TaskModalProps{
 	isTaskModalOpen: boolean;
 	task: TaskType;
 	subtasksCompleted: number;
+	handleCloseTaskModal: () => void;
 }
 
-export function TaskModal({ isTaskModalOpen, task, subtasksCompleted }: TaskModalProps) {
+export function TaskModal({ isTaskModalOpen, task, subtasksCompleted, handleCloseTaskModal}: TaskModalProps) {
+	useEffect(() => {
+		document.addEventListener('keyup', (e) => {
+			if(e.key === 'Escape'){
+				handleCloseTaskModal();
+			}
+		});
+
+		return () => {
+			document.removeEventListener('keyup', () => handleCloseTaskModal);
+		};
+	}, []);
 
 
 	return(
 		<>
-			{isTaskModalOpen && <ModalContainer>
-				<div>
+			{isTaskModalOpen && <ModalContainer onClick={handleCloseTaskModal}>
+				<div onClick={e => e.stopPropagation()}>
 					<header>
 						<strong>{task.title}</strong>
 						<img src={dotsIcon} alt="Task settings" />

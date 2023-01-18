@@ -12,7 +12,7 @@ export const ModalContainer = styled.div`
 	background: rgba(0, 0, 0, 0.2);
 
 	& > div {
-		max-width: 30rem;
+		width: 30rem;
 		background: var(--white);
 		padding: 2rem;
 		border-radius: 6px;
