@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Board as BoardType } from '../../types/Board';
+
 import {
 	AsideContainer,
 	BoardsList,
@@ -17,12 +19,21 @@ import hideIcon from '../../assets/icon-hide-sidebar.svg';
 import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
 
 
-export function Sidebar() {
+interface SidebarProps {
+	boards: BoardType[];
+	selectedBoard: string;
+	handleSelectBoard: (boardName: string) => void;
+}
+
+
+export function Sidebar({ boards, selectedBoard, handleSelectBoard }: SidebarProps) {
 	const [hideSidebar, setHideSidebar] = useState(false);
 
-	function handleHideSidebar(){
+	function handleHideSidebar() {
 		setHideSidebar(!hideSidebar);
 	}
+
+	console.log(boards.map((board) => board.name));
 
 	return (
 		<AsideContainer className={hideSidebar ? 'sidebarHide' : ''} >
@@ -32,18 +43,18 @@ export function Sidebar() {
 						<div>
 							<small>All boards (3)</small>
 							<BoardsList>
-								<Board className="activeBoard">
-									<img src={boardIcon} />
-									<span>Platform Launch</span>
-								</Board>
-								<Board>
-									<img src={boardIcon} />
-									<span>Marketing Plan</span>
-								</Board>
-								<Board>
-									<img src={boardIcon} />
-									<span>Roadmap</span>
-								</Board>
+								{boards.map((board) => {
+									return (
+										<Board
+											key={board.name}
+											className={board.name === selectedBoard ? 'activeBoard' : ''}
+											onClick={() => handleSelectBoard(board.name)}
+										>
+											<img src={boardIcon} />
+											<span>{board.name}</span>
+										</Board>
+									);
+								})}
 								<Board className="createButton">
 									<img src={boardIcon} />
 									<span>+ Create New Board</span>

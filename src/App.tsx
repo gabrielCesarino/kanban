@@ -14,12 +14,17 @@ export function App() {
 
 	server();
 	const [boards, setBoards] = useState<BoardType[]>([]);
+	const [selectedBoard, setSelectedBoard] = useState('Platform Launch');
+
+	function selectBoard(boardName: string) {
+		setSelectedBoard(boardName);
+	}
 
 	useEffect(() => {
 		fetch('/boards')
 			.then((res) => res.json())
 			.then((json) => {
-				setBoards(json);
+				setBoards(json.boards);
 			});
 	}, []);
 
@@ -29,13 +34,12 @@ export function App() {
 		<>
 			<GlobalStyle />
 			<AppContainer>
-				<Header boards={boards}/>
+				<Header boards={boards} selectedBoard={selectedBoard}/>
 				<main>
-					<Sidebar />
+					<Sidebar boards={boards} handleSelectBoard={selectBoard} selectedBoard={selectedBoard}/>
 					<Board />
 				</main>
 			</AppContainer>
-
 		</>
 	);
 }

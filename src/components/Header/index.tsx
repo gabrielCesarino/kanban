@@ -4,14 +4,19 @@ import { Board as BoardType } from '../../types/Board';
 import kanbanLogo from '../../assets/logo-dark.svg';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 
-export function Header(props: BoardType) {
+interface HeaderProps {
+	boards: BoardType[];
+	selectedBoard: string;
+}
+
+export function Header({ boards, selectedBoard}: HeaderProps) {
 	return(
 		<HeaderContainer>
 			<div>
 				<LogoContainer>
 					<img src={kanbanLogo} />
 				</LogoContainer>
-				<strong>Platform Launch</strong>
+				<strong>{selectedBoard}</strong>
 			</div>
 			<ButtonsContainer>
 				<button>+ Add new task</button>
