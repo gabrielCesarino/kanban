@@ -37,7 +37,7 @@ export function App() {
 				<Header boards={boards} selectedBoard={selectedBoard}/>
 				<main>
 					<Sidebar boards={boards} handleSelectBoard={selectBoard} selectedBoard={selectedBoard}/>
-					<Board />
+					<Board boards={boards} selectedBoard={selectedBoard}/>
 				</main>
 			</AppContainer>
 		</>
