@@ -1,4 +1,5 @@
 import { Task as TaskType } from '../../types/Task';
+import { TaskModal } from '../TaskModal';
 import { TaskContainer } from './styles';
 
 interface TaskProps {
@@ -16,9 +17,12 @@ export function Task({ task }: TaskProps) {
 	}, 0);
 
 	return (
-		<TaskContainer>
-			<strong>{task.title}</strong>
-			<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
-		</TaskContainer>
+		<>
+			<TaskContainer>
+				<strong>{task.title}</strong>
+				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
+			</TaskContainer>
+			<TaskModal />
+		</>
 	);
 }
