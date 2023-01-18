@@ -6,7 +6,7 @@ export const BoardContainer = styled.div`
 `;
 
 export const BoardCollumn = styled.div`
-	min-width: 17.5rem;
+	width: 17.5rem;
 
 	& + div {
 		margin-left: 1rem;
