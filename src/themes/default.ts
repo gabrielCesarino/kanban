@@ -5,6 +5,7 @@ export const defaultTheme = {
 		'purple-hover': '#a8a4ff',
 		'background': '#e4ebfa',
 		'white': '#ffffff',
+		'input-border': '#828fa3',
 		text: {
 			'small': '#828fa3',
 			'primary': '#000000',

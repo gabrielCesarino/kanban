@@ -5,6 +5,7 @@ export const darkTheme = {
 		'purple-hover': '#a8a4ff',
 		'background': '#20212c',
 		'white': '#ffffff',
+		'input-border': '#828fa3',
 		text: {
 			'small': '#828fa3',
 			'primary': '#ffffff',

@@ -82,12 +82,13 @@ export const StatusContainer = styled.div`
 		padding: 1rem;
 		border-radius: 4px;
 		background: ${(props) => props.theme.colors['primary']};
-		border: 1px solid ${(props) => props.theme.colors['purple-hover']};
+		border: 1px solid ${(props) => props.theme.colors['input-border']};
 		font-size: 0.875rem;
 		color: ${(props) => props.theme.colors.text['primary']};
 
 		&:focus-within{
-			outline: 1px solid ${(props) => props.theme.colors['purple']};
+			border: 1px solid ${(props) => props.theme.colors['purple']};
+			outline: none;
 		}
 	}
 `;
