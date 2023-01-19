@@ -17,8 +17,8 @@ export function Board({ boards, selectedBoard }: BoardProps) {
 			{currentBoard?.columns.map((column) => {
 				return (
 					<BoardCollumn key={column.name}>
-						<small>{column.name} ({column.tasks.length})</small>
-						{column.tasks.map((task: TaskType) => {
+						<small>{column.name} ({column.tasks ? column.tasks.length : '0'})</small>
+						{column.tasks?.map((task: TaskType) => {
 							return (
 								<Task key={task.title} task={task}/>
 							);

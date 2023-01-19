@@ -37,7 +37,6 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 	const [hideSidebar, setHideSidebar] = useState(false);
 	const [isAddNewBoardModalOpen, setIsAddNewBoardModalOpen] = useState(false);
 	const [newBoardName, setNewBoardName] = useState('');
-	const [newColumns, setNewColumns] = useState<Columns[]>([]);
 
 	function handleOpenAddNewBoardModal() {
 		setIsAddNewBoardModalOpen(true);
@@ -55,19 +54,19 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 		setNewBoardName(event.currentTarget.value);
 	}
 
-	function handleNewColumns(event: React.ChangeEvent<HTMLInputElement>) {
-		const newColumn = {
-			name: event.currentTarget.value,
-			tasks: []
-		};
-
-		setNewColumns((state) => [...state, newColumn]);
-	}
-
 	function handleCreateNewBoard(){
 		const board = {
 			name: newBoardName,
-			columns: []
+			columns: [
+				{
+					name: 'todo',
+				},
+				{
+					name: 'doing',
+				},
+				{
+					name: 'done'
+				}]
 		};
 
 		createNewBoard(board);
@@ -133,7 +132,7 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 								<small>Name</small>
 								<input type="text" onChange={handleNewBoardName}/>
 							</InputContainer>
-							<InputContainer>
+							{/* <InputContainer>
 								<small>Columns</small>
 								<div>
 									<input type="text" />
@@ -146,7 +145,7 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 							</InputContainer>
 							<ButtonAddSubtask>
 								+Add New Column
-							</ButtonAddSubtask>
+							</ButtonAddSubtask> */}
 							<ButtonAddSubtask onClick={handleCreateNewBoard}>
 								Create New Board
 							</ButtonAddSubtask>
