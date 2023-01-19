@@ -6,6 +6,7 @@ export const defaultTheme = {
 		'background': '#e4ebfa',
 		'white': '#ffffff',
 		'input-border': '#828fa3',
+		'subtask-hover': 'rgba(99, 95, 199, 0.25)',
 		text: {
 			'small': '#828fa3',
 			'primary': '#000000',

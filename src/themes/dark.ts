@@ -6,6 +6,7 @@ export const darkTheme = {
 		'background': '#20212c',
 		'white': '#ffffff',
 		'input-border': '#828fa3',
+		'subtask-hover': 'rgba(99, 95, 199, 0.25)',
 		text: {
 			'small': '#828fa3',
 			'primary': '#ffffff',

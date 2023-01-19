@@ -49,6 +49,7 @@ export const Subtask = styled.div`
 	background: ${(props) => props.theme.colors['background']};
 	padding: 0.75rem;
 	border-radius: 4px;
+	transition: background 0.2s;
 
 	input[type=checkbox]:checked + span {
 		text-decoration-line: line-through;
@@ -63,6 +64,11 @@ export const Subtask = styled.div`
 
 	& + div {
 		margin-top: 1rem;
+	}
+
+	&:hover{
+		background: ${(props) => props.theme.colors['subtask-hover']};
+		cursor: pointer;
 	}
 `;
 
@@ -89,6 +95,10 @@ export const StatusContainer = styled.div`
 		&:focus-within{
 			border: 1px solid ${(props) => props.theme.colors['purple']};
 			outline: none;
+		}
+
+		&:hover{
+			cursor: pointer;
 		}
 	}
 `;
