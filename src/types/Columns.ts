@@ -1,4 +1,6 @@
+import { Task } from './Task';
+
 export interface Columns {
-	name: string,
-	tasks?: []
+	name: 'TODO' | 'DOING' | 'DONE'
+	tasks: Task[]
 }

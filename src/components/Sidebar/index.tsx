@@ -17,11 +17,9 @@ import darkIcon from '../../assets/icon-dark-theme.svg';
 import lightIcon from '../../assets/icon-light-theme.svg';
 import hideIcon from '../../assets/icon-hide-sidebar.svg';
 import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
-import crossIcon from '../../assets/icon-cross.svg';
 
 import { Modal } from '../Modal';
 import { ButtonAddSubtask, FormContainer, InputContainer } from '../../styles/modalForms';
-import { Columns } from '../../types/Columns';
 
 interface SidebarProps {
 	boards: BoardType[];
@@ -55,21 +53,22 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 	}
 
 	function handleCreateNewBoard(){
-		const board = {
+		createNewBoard({
 			name: newBoardName,
 			columns: [
 				{
-					name: 'todo',
+					name: 'TODO',
+					tasks: []
 				},
 				{
-					name: 'doing',
+					name: 'DOING',
+					tasks: []
 				},
 				{
-					name: 'done'
+					name: 'DONE',
+					tasks: []
 				}]
-		};
-
-		createNewBoard(board);
+		});
 		closeAddNewBoardModal();
 	}
 

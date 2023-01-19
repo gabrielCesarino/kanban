@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dataBoards from './utils/data.json';
 
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './themes/default';
@@ -10,10 +9,11 @@ import { Board } from './components/Board';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import { GlobalStyle, AppContainer} from './GlobalStyle';
+import { Task } from './types/Task';
 
 
 export function App() {
-	const [boards, setBoards] = useState<BoardType[]>(dataBoards.boards);
+	const [boards, setBoards] = useState<BoardType[]>([]);
 	const [selectedBoard, setSelectedBoard] = useState('Platform Launch');
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
@@ -30,12 +30,38 @@ export function App() {
 		console.log(boards);
 	}
 
+	function createNewTask(task: Task, boardName: string){
+		const currentBoard = boards.find((board) => board.name === boardName);
+
+		if(!currentBoard){
+			return console.log('error');
+		}
+
+		const currentColumnIndex = currentBoard.columns.findIndex((column) => column.name.toUpperCase() === task.status);
+
+		currentBoard.columns[currentColumnIndex].tasks.push(task);
+
+		const updatedBoards = boards.map((board) => {
+			if(board.name === currentBoard.name){
+				return currentBoard;
+			}else {
+				return board;
+			}
+		});
+
+		setBoards(updatedBoards);
+	}
+
 
 	return (
 		<ThemeProvider theme={isDarkTheme ? darkTheme : defaultTheme}>
 			<GlobalStyle />
 			<AppContainer>
-				<Header selectedBoard={selectedBoard} isDarkTheme={isDarkTheme}/>
+				<Header
+					selectedBoard={selectedBoard}
+					isDarkTheme={isDarkTheme}
+					createNewTask={createNewTask}
+				/>
 				<main>
 					<Sidebar
 						boards={boards}

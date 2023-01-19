@@ -1,7 +1,7 @@
 export interface Task{
 	title: string,
 	description: string,
-	status: string,
+	status: 'TODO' | 'DOING' | 'DONE',
 	subtasks: Subtask[]
 }
 
