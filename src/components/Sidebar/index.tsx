@@ -18,22 +18,20 @@ import lightIcon from '../../assets/icon-light-theme.svg';
 import hideIcon from '../../assets/icon-hide-sidebar.svg';
 import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
 
-
 interface SidebarProps {
 	boards: BoardType[];
 	selectedBoard: string;
 	handleSelectBoard: (boardName: string) => void;
+	handleSelectTheme: () => void;
+	checked: boolean;
 }
 
 
-export function Sidebar({ boards, selectedBoard, handleSelectBoard }: SidebarProps) {
+export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelectTheme, checked }: SidebarProps) {
 	const [hideSidebar, setHideSidebar] = useState(false);
-
 	function handleHideSidebar() {
 		setHideSidebar(!hideSidebar);
 	}
-
-	console.log(boards.map((board) => board.name));
 
 	return (
 		<AsideContainer className={hideSidebar ? 'sidebarHide' : ''} >
@@ -66,7 +64,7 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard }: SidebarPro
 							<ToggleThemeContainer>
 								<img src={lightIcon} alt="Dark mode" />
 								<ToggleContainer>
-									<input type="checkbox" id="switch" />
+									<input type="checkbox" id="switch" onChange={handleSelectTheme} checked={checked} />
 									<label htmlFor="switch">Toggle</label>
 								</ToggleContainer>
 								<img src={darkIcon} alt="Light mode" />

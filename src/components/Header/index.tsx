@@ -1,17 +1,17 @@
-import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
-import { Board as BoardType } from '../../types/Board';
-
-import kanbanLogo from '../../assets/logo-dark.svg';
-import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
-import { Modal } from '../Modal';
 import { useState } from 'react';
+import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
+import { Modal } from '../Modal';
+
+import kanbanLogoDark from '../../assets/logo-dark.svg';
+import kanbanLogoLight from '../../assets/logo-light.svg';
+import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 
 interface HeaderProps {
-	boards: BoardType[];
 	selectedBoard: string;
+	isDarkTheme: boolean;
 }
 
-export function Header({ boards, selectedBoard}: HeaderProps) {
+export function Header({ selectedBoard, isDarkTheme}: HeaderProps) {
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
 
 	function handleOpenAddNewTaskModal() {
@@ -26,7 +26,7 @@ export function Header({ boards, selectedBoard}: HeaderProps) {
 		<HeaderContainer>
 			<div>
 				<LogoContainer>
-					<img src={kanbanLogo} />
+					<img src={isDarkTheme ? kanbanLogoLight : kanbanLogoDark}/>
 				</LogoContainer>
 				<strong>{selectedBoard}</strong>
 			</div>

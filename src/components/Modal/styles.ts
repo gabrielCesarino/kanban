@@ -14,7 +14,7 @@ export const ModalContainer = styled.div`
 
 	& > div {
 		width: 30rem;
-		background: var(--white);
+		background: ${(props) => props.theme.colors['primary']};
 		padding: 2rem;
 		border-radius: 6px;
 		display: flex;
@@ -26,12 +26,13 @@ export const ModalContainer = styled.div`
 			justify-content: space-between;
 			font-size: 1.125rem;
 			gap: 1rem;
+			color: ${(props) => props.theme.colors.text['primary']};
 		}
 
 		small {
 			margin-top: 1.5rem;
 			font-size: 0.875rem;
-			color: var(--gray-400);
+			color: ${(props) => props.theme.colors.text['small']};
 			line-height: 2.3;
 		}
 	}

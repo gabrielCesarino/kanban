@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
 export const AsideContainer = styled.aside`
-	background: var(--white);
+	background: ${(props) => props.theme.colors['primary']};
 	display: flex;
 	flex-direction: column;
 	min-width: 16rem;
+	position: sticky;
 	height: calc(100vh - 5rem);
 	align-items: flex-start;
-	border-right: 1px solid rgba(100, 100, 100, 0.2);
-	padding: 2.5rem 0;
+	border-right: 1px solid rgba(168, 164, 255, 0.25);
+	border-radius: 0 0 20px 20px;
+	padding: 1.5rem 0;
 
 	& > img {
 		width: 12rem;
@@ -35,7 +37,7 @@ export const InteractionsContainer = styled.div`
 			font-weight: bold;
 			text-transform: uppercase;
 			letter-spacing: 2.4px;
-			color: var(--gray-400);
+			color: ${(props) => props.theme.colors.text['small']};
 		}
 	}
 
@@ -55,7 +57,7 @@ export const BoardsList = styled.div`
 `;
 
 export const Board = styled.div`
-	color: var(--gray-400);
+	color: ${(props) => props.theme.colors.text['secondary']};
 	font-weight: bold;
 	padding: 1rem 0;
 	display: flex;
@@ -63,11 +65,7 @@ export const Board = styled.div`
 	padding-left: 2rem;
 
 	&.createButton {
-		color: var(--purple-700);
-
-		> img {
-			color: var(--purple-700);
-		}
+		color: ${(props) => props.theme.colors['purple']};
 	}
 
 	& > span {
@@ -79,13 +77,9 @@ export const Board = styled.div`
 	}
 
 	&.activeBoard {
-		background: var(--purple-700);
+		background: ${(props) => props.theme.colors['purple']};
 		border-radius: 0 40px 40px 0;
-		color: var(--white);
-
-		> img {
-			fill: var(--white)
-		}
+		color: ${(props) => props.theme.colors['white']};
 	}
 `;
 
@@ -94,7 +88,7 @@ export const ToggleThemeContainer = styled.div`
 		align-items: center;
 		justify-content: center;
 		gap: 1rem;
-		background: var(--gray-100);
+		background: ${(props) => props.theme.colors['background']};
 		padding: 1rem;
 		width: 100%;
 		border-radius: 8px;
@@ -110,7 +104,7 @@ export const ToggleContainer = styled.div`
 		text-indent: -9999px;
 		width: 2.5rem;
 		height: 1.25rem;
-		background: var(--purple-700);
+		background: ${(props) => props.theme.colors['purple']};
 		display: block;
 		border-radius: 100px;
 		position: relative;
@@ -129,7 +123,7 @@ export const ToggleContainer = styled.div`
 	}
 
 	input:checked + label {
-		background: var(--gray-500);
+		background: #3e3f4e;
 	}
 
 	input:checked + label:after {
@@ -151,14 +145,14 @@ export const HideContainer = styled.div`
 
 	& > small {
 		font-weight: bold;
-		color: var(--gray-400);
+		color: ${(props) => props.theme.colors.text['small']}
 	}
 
 	&:hover{
 		cursor: pointer;
 
 		> small {
-			color: var(--purple-300);
+			color: ${(props) => props.theme.colors['purple-hover']};
 		}
 	}
 `;
@@ -168,7 +162,7 @@ export const ShowSidebarContainer = styled.div`
 	bottom: 3rem;
 
 	button {
-		background: var(--purple-700);
+		background: ${(props) => props.theme.colors['purple']};
 		border: 0;
 		border-radius: 0 40px 40px 0;
 		padding: 0.75rem;
@@ -180,7 +174,7 @@ export const ShowSidebarContainer = styled.div`
 
 		&:hover {
 			cursor: pointer;
-			background-color: var(--purple-300);
+			background: ${(props) => props.theme.colors['purple-hover']};
 		}
 	}
 `;

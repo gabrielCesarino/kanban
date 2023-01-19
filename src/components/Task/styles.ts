@@ -5,15 +5,19 @@ export const TaskContainer = styled.div`
 	flex-direction: column;
 	padding: 1.5rem;
 	border-radius: 8px;
-	background: var(--white);
+	background: ${(props) => props.theme.colors['primary']};
 	line-height: 1.6;
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 	margin-top: 1rem;
 
+	& > strong {
+		color: ${(props) => props.theme.colors.text['primary']};
+	}
+
 	& > span {
 		font-size: 0.75rem;
 		font-weight: bold;
-		color: var(--gray-400);
+		color: ${(props) => props.theme.colors.text['small']};
 	}
 
 	&:hover{
@@ -31,7 +35,7 @@ export const SubtasksContainer = styled.div`
 	& > span {
 		font-size: 0.75rem;
 		font-weight: bold;
-		color: var(--gray-400);
+		color: ${(props) => props.theme.colors.text['small']}
 	}
 
 	ul {
@@ -42,17 +46,17 @@ export const SubtasksContainer = styled.div`
 export const Subtask = styled.div`
 	display: flex;
 	gap: 1rem;
-	background: var(--gray-300);
+	background: ${(props) => props.theme.colors['background']};
 	padding: 0.75rem;
 	border-radius: 4px;
 
 	input[type=checkbox]:checked + span {
 		text-decoration-line: line-through;
-		color: var(--gray-400);
+		color: ${(props) => props.theme.colors.text['small']};
 	}
 
 	& > span {
-		color: var(--gray-800);
+		color: ${(props) => props.theme.colors.text['primary']};
 		font-size: 0.75rem;
 		font-weight: bold;
 	}
@@ -77,12 +81,13 @@ export const StatusContainer = styled.div`
 		margin-top: 0.25rem;
 		padding: 1rem;
 		border-radius: 4px;
-		border: 1px solid var(--gray-300);
-
+		background: ${(props) => props.theme.colors['primary']};
+		border: 1px solid ${(props) => props.theme.colors['purple-hover']};
 		font-size: 0.875rem;
+		color: ${(props) => props.theme.colors.text['primary']};
 
 		&:focus-within{
-			outline: 1px solid var(--gray-400);
+			outline: 1px solid ${(props) => props.theme.colors['purple']};
 		}
 	}
 `;

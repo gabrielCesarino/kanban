@@ -17,7 +17,7 @@ export const BoardCollumn = styled.div`
 			font-weight: bold;
 			text-transform: uppercase;
 			letter-spacing: 2.4px;
-			color: var(--gray-400);
+			color: ${(props) => props.theme.colors.text['small']};
 			display: flex;
 			align-items: center;
 			gap: 0.5rem;
@@ -30,7 +30,7 @@ export const BoardCollumn = styled.div`
     		border-radius:50%;
 				display: inline-block;
 				margin: 0;
-				background: var(--purple-700);
+				background: ${(props) => props.theme.colors['purple']};
 			}
 	}
 `;
