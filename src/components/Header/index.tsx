@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { HeaderContainer, ButtonsContainer, LogoContainer, FormContainer, ButtonAddSubtask, InputContainer } from './styles';
+import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
+import {  FormContainer, ButtonAddSubtask, InputContainer } from '../../styles/modalForms';
 import { Modal } from '../Modal';
 
 import kanbanLogoDark from '../../assets/logo-dark.svg';

@@ -5,7 +5,6 @@ export const AsideContainer = styled.aside`
 	display: flex;
 	flex-direction: column;
 	min-width: 16rem;
-	position: sticky;
 	height: calc(100vh - 5rem);
 	align-items: flex-start;
 	border-right: 1px solid rgba(168, 164, 255, 0.25);

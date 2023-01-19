@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Board as BoardType } from '../../types/Board';
 
 import {
@@ -17,20 +17,61 @@ import darkIcon from '../../assets/icon-dark-theme.svg';
 import lightIcon from '../../assets/icon-light-theme.svg';
 import hideIcon from '../../assets/icon-hide-sidebar.svg';
 import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
+import crossIcon from '../../assets/icon-cross.svg';
+
+import { Modal } from '../Modal';
+import { ButtonAddSubtask, FormContainer, InputContainer } from '../../styles/modalForms';
+import { Columns } from '../../types/Columns';
 
 interface SidebarProps {
 	boards: BoardType[];
 	selectedBoard: string;
 	handleSelectBoard: (boardName: string) => void;
 	handleSelectTheme: () => void;
+	createNewBoard: (board:BoardType) => void;
 	checked: boolean;
 }
 
 
-export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelectTheme, checked }: SidebarProps) {
+export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelectTheme, createNewBoard, checked  }: SidebarProps) {
 	const [hideSidebar, setHideSidebar] = useState(false);
+	const [isAddNewBoardModalOpen, setIsAddNewBoardModalOpen] = useState(false);
+	const [newBoardName, setNewBoardName] = useState('');
+	const [newColumns, setNewColumns] = useState<Columns[]>([]);
+
+	function handleOpenAddNewBoardModal() {
+		setIsAddNewBoardModalOpen(true);
+	}
+
+	function closeAddNewBoardModal() {
+		setIsAddNewBoardModalOpen(false);
+	}
+
 	function handleHideSidebar() {
 		setHideSidebar(!hideSidebar);
+	}
+
+	function handleNewBoardName(event: React.ChangeEvent<HTMLInputElement> ) {
+		setNewBoardName(event.currentTarget.value);
+	}
+
+	function handleNewColumns(event: React.ChangeEvent<HTMLInputElement>) {
+		const newColumn = {
+			name: event.currentTarget.value,
+			tasks: []
+		};
+
+		setNewColumns((state) => [...state, newColumn]);
+	}
+
+	function handleCreateNewBoard(){
+		const board = {
+			name: newBoardName,
+			columns: []
+		};
+
+		createNewBoard(board);
+		closeAddNewBoardModal();
 	}
 
 	return (
@@ -53,13 +94,12 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 										</Board>
 									);
 								})}
-								<Board className="createButton">
+								<Board onClick={handleOpenAddNewBoardModal} className="createButton">
 									<img src={boardIcon} />
 									<span>+ Create New Board</span>
 								</Board>
 							</BoardsList>
 						</div>
-
 						<footer>
 							<ToggleThemeContainer>
 								<img src={lightIcon} alt="Dark mode" />
@@ -81,6 +121,38 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 							<img src={showSideBarIcon} alt="Show sidebar" />
 						</button>
 					</ShowSidebarContainer>
+			}
+			{isAddNewBoardModalOpen &&
+				<Modal handleCloseModal={closeAddNewBoardModal}>
+					<div onClick={e => e.stopPropagation()}>
+						<header>
+							<strong>Add New Board</strong>
+						</header>
+						<FormContainer onSubmit={(e) => e.preventDefault()}>
+							<InputContainer>
+								<small>Name</small>
+								<input type="text" onChange={handleNewBoardName}/>
+							</InputContainer>
+							<InputContainer>
+								<small>Columns</small>
+								<div>
+									<input type="text" />
+									<img src={crossIcon}/>
+								</div>
+								<div>
+									<input type="text" />
+									<img src={crossIcon}/>
+								</div>
+							</InputContainer>
+							<ButtonAddSubtask>
+								+Add New Column
+							</ButtonAddSubtask>
+							<ButtonAddSubtask onClick={handleCreateNewBoard}>
+								Create New Board
+							</ButtonAddSubtask>
+						</FormContainer>
+					</div>
+				</Modal>
 			}
 		</AsideContainer>
 	);
