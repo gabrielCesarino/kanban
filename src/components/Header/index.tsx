@@ -19,6 +19,8 @@ interface HeaderProps {
 
 export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps) {
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
+	const [generateSubtask, setGenerateSubtask] = useState<number>(0);
+	const [subtasksFieldArray, setSubtasksFieldArray] = useState<number[]>([]);
 	const { register, handleSubmit, reset, formState: {errors}} = useForm<Task>();
 
 	function handleOpenAddNewTaskModal() {
@@ -27,6 +29,20 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 
 	function closeAddNewTaskModal() {
 		setIsAddNewTaskModalOpen(false);
+	}
+
+	function handleAddNewSubtaskField(){
+		if(subtasksFieldArray.length >= 3){
+			return;
+		}
+		setGenerateSubtask((state) => state + 1);
+		setSubtasksFieldArray((state) => [...state, generateSubtask]);
+	}
+
+	function handleDeleteField(index: number) {
+		const updatedSubstasksField = subtasksFieldArray.filter((field) => field !== subtasksFieldArray[index]);
+		console.log(updatedSubstasksField);
+		setSubtasksFieldArray(updatedSubstasksField);
 	}
 
 
@@ -70,11 +86,16 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 						</InputContainer>
 						<InputContainer>
 							<small>Subtasks</small>
-							<div>
-								<input type="text" {...register(`subtasks.${0}.title`)}/>
-								<img src={crossIcon} />
-							</div>
-							<ButtonAddSubtask>Add new subtask</ButtonAddSubtask>
+							{subtasksFieldArray.map((field, index) => {
+								return (
+									<div key={index}>
+										<input type="text" {...register(`subtasks.${index}.title`)}/>
+										<img src={crossIcon} onClick={() => handleDeleteField(index)}/>
+									</div>
+								);
+							})}
+							{subtasksFieldArray.length >= 3 && <small>Only 3 subtasks per task is allowed</small>}
+							<ButtonAddSubtask onClick={handleAddNewSubtaskField}>Add new subtask</ButtonAddSubtask>
 						</InputContainer>
 						<InputContainer>
 							<small>Status</small>
