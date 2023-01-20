@@ -32,7 +32,7 @@ export function Task({ task }: TaskProps) {
 		<>
 			<TaskContainer onClick={handleOpenTaskModal}>
 				<strong>{task.title}</strong>
-				<span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>
+				{task.subtasks.length > 0 && <span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>}
 			</TaskContainer>
 			{isTaskModalOpen && <Modal handleCloseModal={closeTaskModal}>
 				<div onClick={e => e.stopPropagation()}>
@@ -41,7 +41,7 @@ export function Task({ task }: TaskProps) {
 						<img src={dotsIcon} alt="Task settings" />
 					</header>
 					<small>{task.description}</small>
-					<SubtasksContainer>
+					{task.subtasks.length > 0 && <SubtasksContainer>
 						<span>Subtasks ({subtasksCompleted} of {task.subtasks.length})</span>
 						<ul>
 							{task.subtasks.map((subtask) => {
@@ -53,11 +53,13 @@ export function Task({ task }: TaskProps) {
 								);
 							})}
 						</ul>
-					</SubtasksContainer>
+					</SubtasksContainer>}
 					<StatusContainer>
 						<span>Current status</span>
-						<select>
-							<option selected>{task.status}</option>
+						<select defaultValue={task.status}>
+							<option value={task.status}>Todo</option>
+							<option>Doing</option>
+							<option>Done</option>
 						</select>
 					</StatusContainer>
 				</div>

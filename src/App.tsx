@@ -14,7 +14,7 @@ import { Task } from './types/Task';
 
 export function App() {
 	const [boards, setBoards] = useState<BoardType[]>([]);
-	const [selectedBoard, setSelectedBoard] = useState('Platform Launch');
+	const [selectedBoard, setSelectedBoard] = useState('');
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
 	function selectBoard(boardName: string) {
