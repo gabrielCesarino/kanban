@@ -21,7 +21,7 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
 	const [generateSubtask, setGenerateSubtask] = useState<number>(0);
 	const [subtasksFieldArray, setSubtasksFieldArray] = useState<number[]>([]);
-	const { register, handleSubmit, reset, formState: {errors}} = useForm<Task>();
+	const { register, handleSubmit, reset, unregister, formState: {errors}} = useForm<Task>();
 
 	function handleOpenAddNewTaskModal() {
 		setIsAddNewTaskModalOpen(true);
@@ -41,6 +41,7 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 	}
 
 	function handleDeleteField(index: number) {
+		unregister(`subtasks.${index}`);
 		const updatedSubstasksField = subtasksFieldArray.filter((field) => field !== subtasksFieldArray[index]);
 		console.log(updatedSubstasksField);
 		setSubtasksFieldArray(updatedSubstasksField);
