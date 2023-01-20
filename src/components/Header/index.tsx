@@ -31,7 +31,8 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 		setIsAddNewTaskModalOpen(false);
 	}
 
-	function handleAddNewSubtaskField(){
+	function handleAddNewSubtaskField(e: React.MouseEvent){
+		e.preventDefault();
 		if(subtasksFieldArray.length >= 3){
 			return;
 		}
@@ -51,10 +52,11 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 			title: data.title,
 			description: data.description,
 			status: data.status,
-			subtasks: data.subtasks
+			subtasks: data.subtasks? data.subtasks : []
 		}, selectedBoard);
 
 		closeAddNewTaskModal();
+		setSubtasksFieldArray([]);
 		reset();
 	};
 
