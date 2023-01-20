@@ -64,6 +64,12 @@ export const InputContainer = styled.div`
 	}
 `;
 
+export const FieldError = styled.span`
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: rgba(213, 138, 138, 0.9);
+`;
+
 export const ButtonAddSubtask = styled.button`
 	margin-top: 0.5rem;
 	background: '${(props) => props.theme.colors['background']}';

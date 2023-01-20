@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
 import { Board as BoardType } from '../../types/Board';
 
 import {
@@ -19,7 +21,7 @@ import hideIcon from '../../assets/icon-hide-sidebar.svg';
 import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
 
 import { Modal } from '../Modal';
-import { ButtonAddSubtask, FormContainer, InputContainer } from '../../styles/modalForms';
+import { ButtonAddSubtask, FormContainer, InputContainer, FieldError } from '../../styles/modalForms';
 
 interface SidebarProps {
 	boards: BoardType[];
@@ -30,11 +32,15 @@ interface SidebarProps {
 	checked: boolean;
 }
 
+type Inputs = {
+	newBoardName: string
+};
+
 
 export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelectTheme, createNewBoard, checked  }: SidebarProps) {
 	const [hideSidebar, setHideSidebar] = useState(false);
 	const [isAddNewBoardModalOpen, setIsAddNewBoardModalOpen] = useState(false);
-	const [newBoardName, setNewBoardName] = useState('');
+	const { register, handleSubmit, reset, formState: {errors}} = useForm<Inputs>();
 
 	function handleOpenAddNewBoardModal() {
 		setIsAddNewBoardModalOpen(true);
@@ -48,13 +54,9 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 		setHideSidebar(!hideSidebar);
 	}
 
-	function handleNewBoardName(event: React.ChangeEvent<HTMLInputElement> ) {
-		setNewBoardName(event.currentTarget.value);
-	}
-
-	function handleCreateNewBoard(){
+	const onSubmit: SubmitHandler<Inputs> = (data: Inputs) =>{
 		createNewBoard({
-			name: newBoardName,
+			name: data.newBoardName,
 			columns: [
 				{
 					name: 'TODO',
@@ -70,7 +72,8 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 				}]
 		});
 		closeAddNewBoardModal();
-	}
+		reset();
+	};
 
 	return (
 		<AsideContainer className={hideSidebar ? 'sidebarHide' : ''} >
@@ -126,26 +129,13 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 						<header>
 							<strong>Add New Board</strong>
 						</header>
-						<FormContainer onSubmit={(e) => e.preventDefault()}>
+						<FormContainer onSubmit={handleSubmit(onSubmit)}>
 							<InputContainer>
 								<small>Name</small>
-								<input type="text" onChange={handleNewBoardName}/>
-							</InputContainer>
-							{/* <InputContainer>
-								<small>Columns</small>
-								<div>
-									<input type="text" />
-									<img src={crossIcon}/>
-								</div>
-								<div>
-									<input type="text" />
-									<img src={crossIcon}/>
-								</div>
+								<input type="text" {...register('newBoardName', { required: true})} />
+								{errors.newBoardName && <FieldError>This field is required</FieldError>}
 							</InputContainer>
 							<ButtonAddSubtask>
-								+Add New Column
-							</ButtonAddSubtask> */}
-							<ButtonAddSubtask onClick={handleCreateNewBoard}>
 								Create New Board
 							</ButtonAddSubtask>
 						</FormContainer>
