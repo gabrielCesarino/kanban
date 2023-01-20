@@ -51,7 +51,7 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 				<strong>{selectedBoard}</strong>
 			</div>
 			<ButtonsContainer>
-				<button onClick={handleOpenAddNewTaskModal}>+ Add new task</button>
+				<button onClick={handleOpenAddNewTaskModal} disabled={selectedBoard === ''}>+ Add new task</button>
 				<img src={dotsIcon} title="Board settings" />
 			</ButtonsContainer>
 			{isAddNewTaskModalOpen && <Modal handleCloseModal={closeAddNewTaskModal}>

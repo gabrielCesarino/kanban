@@ -45,6 +45,14 @@ export const ButtonsContainer = styled.div`
 		padding: 0.75rem 1rem;
 		font-weight: bold;
 
+		&:disabled {
+			background: ${(props) => props.theme.colors['purple-hover']};
+
+			&:hover{
+				cursor: initial;
+			}
+		}
+
 		&:hover{
 			cursor: pointer;
 		}

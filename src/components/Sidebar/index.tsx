@@ -48,6 +48,7 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 
 	function closeAddNewBoardModal() {
 		setIsAddNewBoardModalOpen(false);
+		reset();
 	}
 
 	function handleHideSidebar() {
@@ -72,7 +73,6 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 				}]
 		});
 		closeAddNewBoardModal();
-		reset();
 	};
 
 	return (
