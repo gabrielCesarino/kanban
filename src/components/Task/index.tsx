@@ -1,16 +1,23 @@
 import { useState } from 'react';
-import { Task as TaskType } from '../../types/Task';
+import { useForm } from 'react-hook-form';
+
 import { Modal } from '../Modal';
+import { Task as TaskType } from '../../types/Task';
+
 import { StatusContainer, Subtask, SubtasksContainer, TaskContainer } from './styles';
 
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 
 interface TaskProps {
 	task: TaskType;
+	boardName: string,
+	changeTaskStatus:  (task: TaskType, status: 'TODO' | 'DOING' | 'DONE', boardName: string) => void;
 }
 
-export function Task({ task }: TaskProps) {
+export function Task({ task, changeTaskStatus, boardName }: TaskProps) {
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+	const { register, handleSubmit, reset, unregister, formState: {errors}} = useForm();
+	const [newStatus, setNewStatus] = useState(task.status);
 
 	function handleOpenTaskModal() {
 		setIsTaskModalOpen(true);
@@ -19,6 +26,14 @@ export function Task({ task }: TaskProps) {
 	function closeTaskModal() {
 		setIsTaskModalOpen(false);
 	}
+
+	const onSubmit = (data: any) => {
+		// console.log(data.status, task, boardName);
+		changeTaskStatus(task, data.status, boardName);
+		setNewStatus(data.status);
+		unregister('status');
+		reset();
+	};
 
 	const subtasksCompleted = task.subtasks.reduce((acc, subtask) => {
 		if(subtask.isCompleted === true){
@@ -56,10 +71,12 @@ export function Task({ task }: TaskProps) {
 					</SubtasksContainer>}
 					<StatusContainer>
 						<span>Current status</span>
-						<select defaultValue={task.status}>
-							<option value={task.status}>Todo</option>
-							<option>Doing</option>
-							<option>Done</option>
+						<select value={newStatus} {...register('status', {
+							onChange: handleSubmit(onSubmit)
+						})}>
+							<option value='TODO'>Todo</option>
+							<option value='DOING'>Doing</option>
+							<option value='DONE'>Done</option>
 						</select>
 					</StatusContainer>
 				</div>

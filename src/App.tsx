@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './themes/default';
 import { darkTheme } from './themes/dark';
@@ -34,7 +33,7 @@ export function App() {
 		const currentBoard = boards.find((board) => board.name === boardName);
 
 		if(!currentBoard){
-			return console.log('error');
+			return;
 		}
 
 		const currentColumnIndex = currentBoard.columns.findIndex((column) => column.name.toUpperCase() === task.status);
@@ -50,6 +49,45 @@ export function App() {
 		});
 
 		setBoards(updatedBoards);
+	}
+
+	function changeTaskStatus(task: Task, status: 'TODO' | 'DOING' | 'DONE', boardName: string) {
+		const currentBoard = boards.find((board) => board.name === boardName);
+		const currentColumn = currentBoard?.columns.find((column) => column.name === task.status);
+		const actualTaskIndex = currentColumn?.tasks?.findIndex((currentTask) => currentTask.title === task.title);
+		currentColumn!.tasks[actualTaskIndex!].status = status;
+		currentColumn?.tasks?.splice(actualTaskIndex!, 1);
+
+		const newStatusColumn = currentBoard?.columns.find((column) => column.name === status);
+		newStatusColumn?.tasks.push(task);
+
+		const updatedColumns = currentBoard?.columns.map((column) => {
+			if(column.name === newStatusColumn?.name){
+				return newStatusColumn;
+			}
+
+			if(column.name === currentColumn?.name){
+				return currentColumn;
+			}
+
+			return column;
+		});
+
+		const updatedBoard = boards.map((board) => {
+			if(board.name === boardName){
+				return {
+					...board,
+					columns: updatedColumns
+				};
+			}else {
+				return board;
+			}
+		});
+
+		console.log(currentBoard);
+		console.log('this is the current column', currentColumn);
+		console.log(newStatusColumn);
+		setBoards(updatedBoard);
 	}
 
 
@@ -71,7 +109,11 @@ export function App() {
 						handleSelectTheme={selectTheme}
 						checked={isDarkTheme}
 					/>
-					<Board boards={boards} selectedBoard={selectedBoard}/>
+					<Board
+						boards={boards}
+						selectedBoard={selectedBoard}
+						changeTaskStatus={changeTaskStatus}
+					/>
 				</main>
 			</AppContainer>
 		</ThemeProvider>

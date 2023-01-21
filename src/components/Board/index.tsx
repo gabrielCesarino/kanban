@@ -7,9 +7,10 @@ import { BoardContainer, BoardCollumn } from './styles';
 interface BoardProps {
 	boards: BoardType[];
 	selectedBoard: string;
+	changeTaskStatus: (task: TaskType, status: 'TODO' | 'DOING' | 'DONE', boardName: string) => void;
 }
 
-export function Board({ boards, selectedBoard }: BoardProps) {
+export function Board({ boards, selectedBoard, changeTaskStatus}: BoardProps) {
 	const currentBoard = boards.find((board) => board.name === selectedBoard);
 
 	return (
@@ -20,7 +21,7 @@ export function Board({ boards, selectedBoard }: BoardProps) {
 						<small>{column.name} ({column.tasks ? column.tasks.length : '0'})</small>
 						{column.tasks?.map((task: TaskType) => {
 							return (
-								<Task key={task.title} task={task}/>
+								<Task key={task.title} task={task} changeTaskStatus={changeTaskStatus} boardName={currentBoard.name}/>
 							);
 						})}
 					</BoardCollumn>
