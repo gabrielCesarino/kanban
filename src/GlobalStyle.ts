@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
@@ -25,6 +26,7 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	body {
+
 		background-color: ${(props) => props.theme.colors['background']};
 	}
 
