@@ -2,6 +2,8 @@
 
 Web Application based on kanban organization system. It's possible to organize different type of tasks from work, or even personal, through different panels, and in each panel is also possible to inform the status of the tasks.
 
+Check - 
+
 ## 🚀 Features
 
 - ✍️ Create different dashboards for your different types of tasks.
@@ -39,6 +41,7 @@ It's still in development, so bugs are expected and I will work on below feature
 
 - Add Context API to handle all the data globally
 - Create an API RESTful with NodeJS as currently it's running only with a useState holding all the data
+- Able to handle the subtasks (checking and unchecking)
 - Animations: When sidebar is toggled, at the board and task creation
 - Fix the bugs I said above
 
