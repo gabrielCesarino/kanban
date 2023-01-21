@@ -77,7 +77,7 @@ export function App() {
 			if(board.name === boardName){
 				return {
 					...board,
-					columns: updatedColumns
+					columns: updatedColumns!
 				};
 			}else {
 				return board;
@@ -89,8 +89,6 @@ export function App() {
 		console.log(newStatusColumn);
 		setBoards(updatedBoard);
 	}
-
-
 	return (
 		<ThemeProvider theme={isDarkTheme ? darkTheme : defaultTheme}>
 			<GlobalStyle />
