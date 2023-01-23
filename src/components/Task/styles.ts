@@ -93,7 +93,7 @@ export const StatusContainer = styled.div`
 		color: ${(props) => props.theme.colors.text['primary']};
 
 		&:focus-within{
-			border: 1px solid ${(props) => props.theme.colors['purple']};
+			border: 1px solid ${(props) => props.theme.colors['purple-hover']};
 			outline: none;
 		}
 
