@@ -80,19 +80,11 @@ export function Task({ task, currentBoard }: TaskProps) {
 		reset();
 	};
 
-	const subtasksCompleted = task.subtasks.reduce((acc, subtask) => {
-		if(subtask.isCompleted === true){
-			return acc + 1;
-		}else {
-			return acc;
-		}
-	}, 0);
-
 	return (
 		<>
 			<TaskContainer onClick={handleOpenTaskModal}>
 				<strong>{task.title}</strong>
-				{task.subtasks.length > 0 && <span>{subtasksCompleted} of {task.subtasks.length} subtasks</span>}
+				{task.subtasks.length > 0 && <span>{0} of {task.subtasks.length} subtasks</span>}
 			</TaskContainer>
 			{isTaskModalOpen && <Modal handleCloseModal={closeTaskModal}>
 				<div onClick={e => e.stopPropagation()}>
@@ -102,7 +94,7 @@ export function Task({ task, currentBoard }: TaskProps) {
 					</header>
 					<small>{task.description}</small>
 					{task.subtasks.length > 0 && <SubtasksContainer>
-						<span>Subtasks ({subtasksCompleted} of {task.subtasks.length})</span>
+						<span>Subtasks ({0} of {task.subtasks.length})</span>
 						<ul>
 							{task.subtasks.map((subtask) => {
 								return (
