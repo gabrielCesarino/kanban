@@ -18,7 +18,7 @@ interface HeaderProps {
 }
 
 export function Header({ isDarkTheme}: HeaderProps) {
-	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
+	const [selectedBoard] = useAtom(selectedBoardAtom);
 	const [boards, setBoards ]= useAtom(boardsAtom);
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
 	const [generateSubtask, setGenerateSubtask] = useState<number>(0);

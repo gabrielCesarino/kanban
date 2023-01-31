@@ -7,8 +7,12 @@ import { BoardContainer, BoardCollumn } from './styles';
 
 export function Board() {
 	const [boards]= useAtom(boardsAtom);
-	const [selectedBoard] = useAtom(selectedBoardAtom);
+	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
 	const currentBoard = boards.find((board) => board.name === selectedBoard);
+
+	if(boards.length === 1) {
+		setSelectedBoard(boards[0].name);
+	}
 
 	return (
 		<BoardContainer>

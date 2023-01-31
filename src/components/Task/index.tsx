@@ -9,7 +9,7 @@ import { Task as TaskType } from '../../types/Task';
 import { StatusContainer, Subtask, SubtasksContainer, TaskContainer } from './styles';
 
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
-import { Board, Board as BoardType } from '../../types/Board';
+import { Board as BoardType } from '../../types/Board';
 
 
 interface TaskProps {
