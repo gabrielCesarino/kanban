@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAtom } from 'jotai';
 
 import { Board as BoardType } from '../../types/Board';
 
@@ -22,13 +23,10 @@ import showSideBarIcon from '../../assets/icon-show-sidebar.svg';
 
 import { Modal } from '../Modal';
 import { ButtonAddSubtask, FormContainer, InputContainer, FieldError } from '../../styles/modalForms';
+import { boardsAtom, selectedBoardAtom } from '../../App';
 
 interface SidebarProps {
-	boards: BoardType[];
-	selectedBoard: string;
-	handleSelectBoard: (boardName: string) => void;
 	handleSelectTheme: () => void;
-	createNewBoard: (board:BoardType) => void;
 	checked: boolean;
 }
 
@@ -37,7 +35,9 @@ type Inputs = {
 };
 
 
-export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelectTheme, createNewBoard, checked  }: SidebarProps) {
+export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
+	const [boards, setBoards ]= useAtom(boardsAtom);
+	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
 	const [hideSidebar, setHideSidebar] = useState(false);
 	const [isAddNewBoardModalOpen, setIsAddNewBoardModalOpen] = useState(false);
 	const { register, handleSubmit, reset, formState: {errors}} = useForm<Inputs>();
@@ -55,8 +55,12 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 		setHideSidebar(!hideSidebar);
 	}
 
-	const onSubmit: SubmitHandler<Inputs> = (data: Inputs) =>{
-		createNewBoard({
+	function handleSelectBoard(boardName: string) {
+		setSelectedBoard(boardName);
+	}
+
+	const handleCreateNewBoard: SubmitHandler<Inputs> = (data: Inputs) =>{
+		const newBoard: BoardType = {
 			name: data.newBoardName,
 			columns: [
 				{
@@ -71,7 +75,10 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 					name: 'DONE',
 					tasks: []
 				}]
-		});
+		};
+
+		setBoards((state) => [...state, newBoard]);
+		console.log(boards);
 		closeAddNewBoardModal();
 	};
 
@@ -129,7 +136,7 @@ export function Sidebar({ boards, selectedBoard, handleSelectBoard, handleSelect
 						<header>
 							<strong>Add New Board</strong>
 						</header>
-						<FormContainer onSubmit={handleSubmit(onSubmit)}>
+						<FormContainer onSubmit={handleSubmit(handleCreateNewBoard)}>
 							<InputContainer>
 								<small>Name</small>
 								<input type="text" {...register('newBoardName', { required: true})} />

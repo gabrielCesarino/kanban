@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Provider, atom, useAtom } from 'jotai';
+
 import { ThemeProvider } from 'styled-components';
 import { defaultTheme } from './themes/default';
 import { darkTheme } from './themes/dark';
@@ -7,48 +9,24 @@ import { Board as BoardType } from './types/Board';
 import { Board } from './components/Board';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
-import { GlobalStyle, AppContainer} from './GlobalStyle';
+import { GlobalStyle, AppContainer } from './GlobalStyle';
 import { Task } from './types/Task';
 
+export const boardsAtom = atom<BoardType[]>([]);
+export const selectedBoardAtom = atom<string>('');
 
 export function App() {
-	const [boards, setBoards] = useState<BoardType[]>([]);
-	const [selectedBoard, setSelectedBoard] = useState('');
+	const [boards, setBoards] = useAtom(boardsAtom);
+	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
 
 	function selectBoard(boardName: string) {
 		setSelectedBoard(boardName);
 	}
 
-	function selectTheme(){
+
+	function selectTheme() {
 		setIsDarkTheme(!isDarkTheme);
-	}
-
-	function createNewBoard(board: BoardType) {
-		setBoards((state) => [...state, board]);
-		console.log(boards);
-	}
-
-	function createNewTask(task: Task, boardName: string){
-		const currentBoard = boards.find((board) => board.name === boardName);
-
-		if(!currentBoard){
-			return;
-		}
-
-		const currentColumnIndex = currentBoard.columns.findIndex((column) => column.name.toUpperCase() === task.status);
-
-		currentBoard.columns[currentColumnIndex].tasks.push(task);
-
-		const updatedBoards = boards.map((board) => {
-			if(board.name === currentBoard.name){
-				return currentBoard;
-			}else {
-				return board;
-			}
-		});
-
-		setBoards(updatedBoards);
 	}
 
 	function changeTaskStatus(task: Task, status: 'TODO' | 'DOING' | 'DONE', boardName: string) {
@@ -62,11 +40,11 @@ export function App() {
 		newStatusColumn?.tasks.push(task);
 
 		const updatedColumns = currentBoard?.columns.map((column) => {
-			if(column.name === newStatusColumn?.name){
+			if (column.name === newStatusColumn?.name) {
 				return newStatusColumn;
 			}
 
-			if(column.name === currentColumn?.name){
+			if (column.name === currentColumn?.name) {
 				return currentColumn;
 			}
 
@@ -74,12 +52,12 @@ export function App() {
 		});
 
 		const updatedBoard = boards.map((board) => {
-			if(board.name === boardName){
+			if (board.name === boardName) {
 				return {
 					...board,
 					columns: updatedColumns!
 				};
-			}else {
+			} else {
 				return board;
 			}
 		});
@@ -91,29 +69,23 @@ export function App() {
 	}
 	return (
 		<ThemeProvider theme={isDarkTheme ? darkTheme : defaultTheme}>
+			<Provider>
+				<AppContainer>
+					<Header
+						isDarkTheme={isDarkTheme}
+					/>
+					<main>
+						<Sidebar
+							checked={isDarkTheme}
+							handleSelectTheme={selectTheme}
+						/>
+						<Board
+							changeTaskStatus={changeTaskStatus}
+						/>
+					</main>
+				</AppContainer>
+			</Provider>
 			<GlobalStyle />
-			<AppContainer>
-				<Header
-					selectedBoard={selectedBoard}
-					isDarkTheme={isDarkTheme}
-					createNewTask={createNewTask}
-				/>
-				<main>
-					<Sidebar
-						boards={boards}
-						createNewBoard={createNewBoard}
-						handleSelectBoard={selectBoard}
-						selectedBoard={selectedBoard}
-						handleSelectTheme={selectTheme}
-						checked={isDarkTheme}
-					/>
-					<Board
-						boards={boards}
-						selectedBoard={selectedBoard}
-						changeTaskStatus={changeTaskStatus}
-					/>
-				</main>
-			</AppContainer>
 		</ThemeProvider>
 	);
 }

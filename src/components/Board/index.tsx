@@ -1,16 +1,17 @@
-import { Board as BoardType } from '../../types/Board';
+import { useAtom } from 'jotai';
+import { boardsAtom, selectedBoardAtom } from '../../App';
 import { Task as TaskType } from '../../types/Task';
 import { Task } from '../Task';
 
 import { BoardContainer, BoardCollumn } from './styles';
 
 interface BoardProps {
-	boards: BoardType[];
-	selectedBoard: string;
 	changeTaskStatus: (task: TaskType, status: 'TODO' | 'DOING' | 'DONE', boardName: string) => void;
 }
 
-export function Board({ boards, selectedBoard, changeTaskStatus}: BoardProps) {
+export function Board({ changeTaskStatus}: BoardProps) {
+	const [boards]= useAtom(boardsAtom);
+	const [selectedBoard] = useAtom(selectedBoardAtom);
 	const currentBoard = boards.find((board) => board.name === selectedBoard);
 
 	return (

@@ -10,14 +10,16 @@ import kanbanLogoLight from '../../assets/logo-light.svg';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 import crossIcon from '../../assets/icon-cross.svg';
 import { Task } from '../../types/Task';
+import { boardsAtom, selectedBoardAtom } from '../../App';
+import { useAtom } from 'jotai';
 
 interface HeaderProps {
-	selectedBoard: string;
 	isDarkTheme: boolean;
-	createNewTask: (task: Task, boardName: string) => void;
 }
 
-export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps) {
+export function Header({ isDarkTheme}: HeaderProps) {
+	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
+	const [boards, setBoards ]= useAtom(boardsAtom);
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
 	const [generateSubtask, setGenerateSubtask] = useState<number>(0);
 	const [subtasksFieldArray, setSubtasksFieldArray] = useState<number[]>([]);
@@ -45,6 +47,29 @@ export function Header({ selectedBoard, isDarkTheme, createNewTask}: HeaderProps
 		const updatedSubstasksField = subtasksFieldArray.filter((field) => field !== subtasksFieldArray[index]);
 		console.log(updatedSubstasksField);
 		setSubtasksFieldArray(updatedSubstasksField);
+	}
+
+	function createNewTask(task: Task, boardName: string) {
+		const currentBoard = boards.find((board) => board.name === boardName);
+
+		if (!currentBoard) {
+			return;
+		}
+
+		const currentColumnIndex = currentBoard.columns.findIndex((column) => column.name.toUpperCase() === task.status);
+
+		currentBoard.columns[currentColumnIndex].tasks.push(task);
+
+		const updatedBoards = boards.map((board) => {
+			if (board.name === currentBoard.name) {
+				return currentBoard;
+			} else {
+				return board;
+			}
+		});
+
+		setBoards(updatedBoards);
+		console.log(boards);
 	}
 
 
