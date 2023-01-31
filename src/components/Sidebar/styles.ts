@@ -4,7 +4,7 @@ export const AsideContainer = styled.aside`
 	background: ${(props) => props.theme.colors['primary']};
 	display: flex;
 	flex-direction: column;
-	min-width: 16rem;
+	width: 16rem;
 	height: calc(100vh - 5rem);
 	align-items: flex-start;
 	border-right: 1px solid rgba(168, 164, 255, 0.25);
@@ -62,6 +62,7 @@ export const Board = styled.div`
 	display: flex;
 	align-items: center;
 	padding-left: 2rem;
+	overflow: hidden;
 
 	&.createButton {
 		color: ${(props) => props.theme.colors['purple']};
