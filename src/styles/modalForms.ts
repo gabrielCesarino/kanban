@@ -30,7 +30,7 @@ export const InputContainer = styled.div`
 	input, textarea, select {
 		border-radius: 4px;
 		border: 1px solid rgba(228, 235, 250, 0.75);
-		background: transparent;
+		background-color: ${(props) => props.theme.colors['primary']};
 		outline: none;
 		color: ${(props) => props.theme.colors.text['primary']};
 

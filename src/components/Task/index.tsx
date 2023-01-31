@@ -2,15 +2,11 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useAtom } from 'jotai';
 import { boardsAtom } from '../../App';
-
 import { Modal } from '../Modal';
 import { Task as TaskType } from '../../types/Task';
-
-import { StatusContainer, Subtask, SubtasksContainer, TaskContainer } from './styles';
-
-import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 import { Board as BoardType } from '../../types/Board';
-
+import { StatusContainer, Subtask, SubtasksContainer, TaskContainer } from './styles';
+import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 
 interface TaskProps {
 	task: TaskType;

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { boardsAtom, selectedBoardAtom } from '../../App';
 import { useAtom } from 'jotai';
-import { v4 as uuid, v4 } from 'uuid';
-import { Subtask, Task } from '../../types/Task';
+import { v4 as uuid } from 'uuid';
+import { Task } from '../../types/Task';
 
 import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
 import { FormContainer, ButtonAddSubtask, InputContainer, FieldError } from '../../styles/modalForms';
@@ -23,7 +23,7 @@ export function Header({ isDarkTheme}: HeaderProps) {
 	const [selectedBoard] = useAtom(selectedBoardAtom);
 	const [boards, setBoards ]= useAtom(boardsAtom);
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
-	const { control, register, handleSubmit, reset, unregister, formState: {errors}} = useForm<Task>();
+	const { control, register, handleSubmit, reset, formState: {errors}} = useForm<Task>();
 	const { fields, append, remove } = useFieldArray({
 		control, // control props comes from useForm (optional: if you are using FormContext)
 		name: 'subtasks',// unique name for your Field Array
