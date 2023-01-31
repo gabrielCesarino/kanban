@@ -5,11 +5,7 @@ import { Task } from '../Task';
 
 import { BoardContainer, BoardCollumn } from './styles';
 
-interface BoardProps {
-	changeTaskStatus: (task: TaskType, status: 'TODO' | 'DOING' | 'DONE', boardName: string) => void;
-}
-
-export function Board({ changeTaskStatus}: BoardProps) {
+export function Board() {
 	const [boards]= useAtom(boardsAtom);
 	const [selectedBoard] = useAtom(selectedBoardAtom);
 	const currentBoard = boards.find((board) => board.name === selectedBoard);
@@ -22,7 +18,7 @@ export function Board({ changeTaskStatus}: BoardProps) {
 						<small>{column.name} ({column.tasks ? column.tasks.length : '0'})</small>
 						{column.tasks?.map((task: TaskType) => {
 							return (
-								<Task key={task.title} task={task} changeTaskStatus={changeTaskStatus} boardName={currentBoard.name}/>
+								<Task key={task.title} task={task} currentBoard={currentBoard}/>
 							);
 						})}
 					</BoardCollumn>
