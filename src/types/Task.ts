@@ -2,10 +2,11 @@ export interface Task{
 	title: string,
 	description: string,
 	status: 'TODO' | 'DOING' | 'DONE',
-	subtasks: Subtask[]
+	subtasks: Subtask[] | []
 }
 
-interface Subtask{
+export interface Subtask{
 	title: string,
-	isCompleted: boolean
+	isCompleted: boolean,
+	id: string
 }

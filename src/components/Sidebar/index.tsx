@@ -80,13 +80,12 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 		const boardAlreadyExists = boards.find((board) => board.name === newBoard.name);
 
 		if(boardAlreadyExists) {
-			setError('newBoardName', { type: 'boardAlreadyExists', message: 'Board Already Exists!' });
+			setError('newBoardName', { type: 'boardAlreadyExists', message: `'${newBoard.name}' is already in use!` });
 			return;
 		}
 
 		setBoards((state) => [...state, newBoard]);
 		setSelectedBoard(newBoard.name);
-		console.log(boards);
 		closeAddNewBoardModal();
 	};
 
@@ -149,7 +148,7 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 								<small>Name</small>
 								<input type="text" {...register('newBoardName', { required: true})} />
 								{errors.newBoardName?.type === 'required' && <FieldError>This field is required</FieldError>}
-								{errors.newBoardName?.type === 'boardAlreadyExists' && <FieldError>Board name is already in use!</FieldError>}
+								{errors.newBoardName?.type === 'boardAlreadyExists' && <FieldError>{errors.newBoardName?.message}</FieldError>}
 							</InputContainer>
 							<ButtonAddSubtask>
 								Create New Board

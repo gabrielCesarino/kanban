@@ -40,7 +40,7 @@ export const InputContainer = styled.div`
 
 	input, select {
 		height: 2.5rem;
-		padding: 0.25rem;
+		padding: 0.5rem;
 	}
 
 	& > textarea {

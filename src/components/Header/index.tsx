@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import { boardsAtom, selectedBoardAtom } from '../../App';
+import { useAtom } from 'jotai';
+import { v4 as uuid, v4 } from 'uuid';
+import { Subtask, Task } from '../../types/Task';
 
 import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
-import { FormContainer, ButtonAddSubtask, InputContainer } from '../../styles/modalForms';
+import { FormContainer, ButtonAddSubtask, InputContainer, FieldError } from '../../styles/modalForms';
 import { Modal } from '../Modal';
 
 import kanbanLogoDark from '../../assets/logo-dark.svg';
 import kanbanLogoLight from '../../assets/logo-light.svg';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
 import crossIcon from '../../assets/icon-cross.svg';
-import { Task } from '../../types/Task';
-import { boardsAtom, selectedBoardAtom } from '../../App';
-import { useAtom } from 'jotai';
+
 
 interface HeaderProps {
 	isDarkTheme: boolean;
@@ -21,9 +23,17 @@ export function Header({ isDarkTheme}: HeaderProps) {
 	const [selectedBoard] = useAtom(selectedBoardAtom);
 	const [boards, setBoards ]= useAtom(boardsAtom);
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
-	const [generateSubtask, setGenerateSubtask] = useState<number>(0);
-	const [subtasksFieldArray, setSubtasksFieldArray] = useState<number[]>([]);
-	const { register, handleSubmit, reset, unregister, formState: {errors}} = useForm<Task>();
+	const { control, register, handleSubmit, reset, unregister, formState: {errors}} = useForm<Task>();
+	const { fields, append, remove } = useFieldArray({
+		control, // control props comes from useForm (optional: if you are using FormContext)
+		name: 'subtasks',// unique name for your Field Array
+		shouldUnregister: true,
+		rules: {
+			required: true,
+			maxLength: 5,
+		}
+	});
+
 
 	function handleOpenAddNewTaskModal() {
 		setIsAddNewTaskModalOpen(true);
@@ -31,22 +41,23 @@ export function Header({ isDarkTheme}: HeaderProps) {
 
 	function closeAddNewTaskModal() {
 		setIsAddNewTaskModalOpen(false);
+		remove();
 	}
 
 	function handleAddNewSubtaskField(e: React.MouseEvent){
 		e.preventDefault();
-		if(subtasksFieldArray.length >= 3){
-			return;
+
+		if(fields.length < 5){
+			append({
+				title: '',
+				id: uuid(),
+				isCompleted: false,
+			});
 		}
-		setGenerateSubtask((state) => state + 1);
-		setSubtasksFieldArray((state) => [...state, generateSubtask]);
 	}
 
 	function handleDeleteField(index: number) {
-		unregister(`subtasks.${index}`);
-		const updatedSubstasksField = subtasksFieldArray.filter((field) => field !== subtasksFieldArray[index]);
-		console.log(updatedSubstasksField);
-		setSubtasksFieldArray(updatedSubstasksField);
+		remove(index);
 	}
 
 	function createNewTask(task: Task, boardName: string) {
@@ -69,20 +80,28 @@ export function Header({ isDarkTheme}: HeaderProps) {
 		});
 
 		setBoards(updatedBoards);
-		console.log(boards);
+		console.log(task);
 	}
 
 
 	const onSubmit: SubmitHandler<Task> = (data: Task) => {
+
 		createNewTask({
 			title: data.title,
 			description: data.description,
 			status: data.status,
-			subtasks: data.subtasks? data.subtasks : []
+			subtasks: data.subtasks ? data.subtasks.map((subtask) => {
+				return (
+					{
+						title: subtask.title,
+						isCompleted: false,
+						id: uuid()
+					}
+				);
+			}) : []
 		}, selectedBoard);
 
 		closeAddNewTaskModal();
-		setSubtasksFieldArray([]);
 		reset();
 	};
 
@@ -107,6 +126,7 @@ export function Header({ isDarkTheme}: HeaderProps) {
 						<InputContainer>
 							<small>Title</small>
 							<input type="text" {...register('title', {required: true})} />
+							{errors.title && <FieldError>Title is required!</FieldError>}
 						</InputContainer>
 						<InputContainer>
 							<small>Description</small>
@@ -114,15 +134,15 @@ export function Header({ isDarkTheme}: HeaderProps) {
 						</InputContainer>
 						<InputContainer>
 							<small>Subtasks</small>
-							{subtasksFieldArray.map((field, index) => {
+							{fields.map((field, index) => {
 								return (
-									<div key={index}>
-										<input type="text" {...register(`subtasks.${index}.title`)}/>
+									<div key={field.id}>
+										<input {...register(`subtasks.${index}.title`, {required: true})}/>
 										<img src={crossIcon} onClick={() => handleDeleteField(index)}/>
+										{errors.subtasks ? errors.subtasks[index] && <FieldError>Substask title is required!</FieldError> : null}
 									</div>
 								);
 							})}
-							{subtasksFieldArray.length >= 3 && <small>Only 3 subtasks per task is allowed</small>}
 							<ButtonAddSubtask onClick={handleAddNewSubtaskField}>Add new subtask</ButtonAddSubtask>
 						</InputContainer>
 						<InputContainer>
