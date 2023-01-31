@@ -40,7 +40,7 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 	const [selectedBoard, setSelectedBoard] = useAtom(selectedBoardAtom);
 	const [hideSidebar, setHideSidebar] = useState(false);
 	const [isAddNewBoardModalOpen, setIsAddNewBoardModalOpen] = useState(false);
-	const { register, handleSubmit, reset, formState: {errors}} = useForm<Inputs>();
+	const {register, handleSubmit, reset, formState: {errors}, setError} = useForm<Inputs>();
 
 	function handleOpenAddNewBoardModal() {
 		setIsAddNewBoardModalOpen(true);
@@ -77,7 +77,15 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 				}]
 		};
 
+		const boardAlreadyExists = boards.find((board) => board.name === newBoard.name);
+
+		if(boardAlreadyExists) {
+			setError('newBoardName', { type: 'boardAlreadyExists', message: 'Board Already Exists!' });
+			return;
+		}
+
 		setBoards((state) => [...state, newBoard]);
+		setSelectedBoard(newBoard.name);
 		console.log(boards);
 		closeAddNewBoardModal();
 	};
@@ -140,7 +148,8 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 							<InputContainer>
 								<small>Name</small>
 								<input type="text" {...register('newBoardName', { required: true})} />
-								{errors.newBoardName && <FieldError>This field is required</FieldError>}
+								{errors.newBoardName?.type === 'required' && <FieldError>This field is required</FieldError>}
+								{errors.newBoardName?.type === 'boardAlreadyExists' && <FieldError>Board name is already in use!</FieldError>}
 							</InputContainer>
 							<ButtonAddSubtask>
 								Create New Board
