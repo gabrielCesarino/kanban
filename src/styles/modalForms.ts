@@ -24,6 +24,7 @@ export const InputContainer = styled.div`
 
 	small {
 		font-weight: bold;
+		max-width: 100%;
 	}
 
 	input, textarea, select {

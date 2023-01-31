@@ -27,11 +27,7 @@ export function Header({ isDarkTheme}: HeaderProps) {
 	const { fields, append, remove } = useFieldArray({
 		control, // control props comes from useForm (optional: if you are using FormContext)
 		name: 'subtasks',// unique name for your Field Array
-		shouldUnregister: true,
-		rules: {
-			required: true,
-			maxLength: 5,
-		}
+		shouldUnregister: true
 	});
 
 
