@@ -1,30 +1,33 @@
-import { useAtom } from 'jotai';
-import { boardsAtom, selectedBoardAtom } from '../../App';
-import { Task as TaskType } from '../../types/Task';
-import { Task } from '../Task';
+import { useRecoilValue } from "recoil";
+import { Task } from "../Task";
 
-import { BoardContainer, BoardCollumn } from './styles';
+import { BoardContainer, BoardCollumn } from "./styles";
+import { dashboards, selectedDashboard } from "../../atoms";
 
 export function Board() {
-	const [boards]= useAtom(boardsAtom);
-	const [selectedBoard] = useAtom(selectedBoardAtom);
-	const currentBoard = boards.find((board) => board.name === selectedBoard);
-
+	const availableDashboards = useRecoilValue(dashboards);
+	const selectedBoard = useRecoilValue(selectedDashboard);
 
 	return (
 		<BoardContainer>
-			{currentBoard?.columns.map((column) => {
+			{/* {selectedBoard.columns.map((column) => {
 				return (
 					<BoardCollumn key={column.name}>
-						<small>{column.name} ({column.tasks ? column.tasks.length : '0'})</small>
+						<small>
+							{column.name} ({column.tasks ? column.tasks.length : '0'})
+						</small>
 						{column.tasks?.map((task: TaskType) => {
 							return (
-								<Task key={task.title} task={task} currentBoard={currentBoard}/>
+								<Task
+									key={task.title}
+									task={task}
+									currentBoard={selectedBoard}
+								/>
 							);
 						})}
 					</BoardCollumn>
 				);
-			})}
+			})} */}
 		</BoardContainer>
 	);
 }

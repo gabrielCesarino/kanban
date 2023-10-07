@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAtom } from 'jotai';
 import { boardsAtom } from '../../App';
 import { Modal } from '../Modal';
 import { Task as TaskType } from '../../types/Task';
 import { Board as BoardType } from '../../types/Board';
 import { StatusContainer, Subtask, SubtasksContainer, TaskContainer } from './styles';
 import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
+import { useRecoilState } from 'recoil';
 
 interface TaskProps {
 	task: TaskType;
@@ -14,7 +14,7 @@ interface TaskProps {
 }
 
 export function Task({ task, currentBoard }: TaskProps) {
-	const [boards, setBoards]= useAtom(boardsAtom);
+	const [boards, setBoards]= useRecoilState(boardsAtom);
 	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 	const { register, handleSubmit, reset, unregister, formState: {errors}} = useForm();
 	const [newStatus, setNewStatus] = useState(task.status);

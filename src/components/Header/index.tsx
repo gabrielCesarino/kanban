@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
-import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
-import { boardsAtom, selectedBoardAtom } from '../../App';
-import { useAtom } from 'jotai';
-import { v4 as uuid } from 'uuid';
-import { Task } from '../../types/Task';
+import React, { useState } from "react";
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import { v4 as uuid } from "uuid";
 
-import { HeaderContainer, ButtonsContainer, LogoContainer } from './styles';
-import { FormContainer, ButtonAddSubtask, InputContainer, FieldError } from '../../styles/modalForms';
-import { Modal } from '../Modal';
 
-import kanbanLogoDark from '../../assets/logo-dark.svg';
-import kanbanLogoLight from '../../assets/logo-light.svg';
-import dotsIcon from '../../assets/icon-vertical-ellipsis.svg';
-import crossIcon from '../../assets/icon-cross.svg';
+import { HeaderContainer, ButtonsContainer, LogoContainer } from "./styles";
+import { FormContainer, ButtonAddSubtask, InputContainer, FieldError } from "../../styles/modalForms";
+import { Modal } from "../Modal";
+import kanbanLogoDark from "../../assets/logo-dark.svg";
+import kanbanLogoLight from "../../assets/logo-light.svg";
+import dotsIcon from "../../assets/icon-vertical-ellipsis.svg";
+import crossIcon from "../../assets/icon-cross.svg";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { dashboards, selectedDashboard } from "../../atoms";
 
 
 interface HeaderProps {
@@ -20,86 +19,105 @@ interface HeaderProps {
 }
 
 export function Header({ isDarkTheme}: HeaderProps) {
-	const [selectedBoard] = useAtom(selectedBoardAtom);
-	const [boards, setBoards ]= useAtom(boardsAtom);
+	const selectedBoard = useRecoilValue(selectedDashboard);
+	// const [columnsInBoard, setColumnsInBoard] = useRecoilState(columnsAtom(selectedBoard?.name));
+	const availableDashboards = useRecoilValue(dashboards);
 	const [isAddNewTaskModalOpen, setIsAddNewTaskModalOpen] = useState(false);
-	const { control, register, handleSubmit, reset, formState: {errors}} = useForm<Task>();
-	const { fields, append, remove } = useFieldArray({
-		control, // control props comes from useForm (optional: if you are using FormContext)
-		name: 'subtasks',// unique name for your Field Array
-		shouldUnregister: true
-	});
+	// const { control, register, handleSubmit, reset, formState: {errors}} = useForm<Task>();
+	// const { fields, append, remove } = useFieldArray({
+	// 	control, // control props comes from useForm (optional: if you are using FormContext)
+	// 	name: "subtasks",// unique name for your Field Array
+	// 	shouldUnregister: true
+	// });
 
 
-	function handleOpenAddNewTaskModal() {
-		setIsAddNewTaskModalOpen(true);
-	}
+	// function handleOpenAddNewTaskModal() {
+	// 	setIsAddNewTaskModalOpen(true);
+	// }
 
-	function closeAddNewTaskModal() {
-		setIsAddNewTaskModalOpen(false);
-		remove();
-	}
+	// function closeAddNewTaskModal() {
+	// 	setIsAddNewTaskModalOpen(false);
+	// 	remove();
+	// }
 
-	function handleAddNewSubtaskField(e: React.MouseEvent){
-		e.preventDefault();
+	// function handleAddNewSubtaskField(e: React.MouseEvent){
+	// 	e.preventDefault();
 
-		if(fields.length < 5){
-			append({
-				title: '',
-				id: uuid(),
-				isCompleted: false,
-			});
-		}
-	}
+	// 	if(fields.length < 5){
+	// 		append({
+	// 			title: "",
+	// 			id: uuid(),
+	// 			isCompleted: false,
+	// 		});
+	// 	}
+	// }
 
-	function handleDeleteField(index: number) {
-		remove(index);
-	}
+	// function handleDeleteField(index: number) {
+	// 	remove(index);
+	// }
 
-	function createNewTask(task: Task, boardName: string) {
-		const currentBoard = boards.find((board) => board.name === boardName);
+	// function createNewTask(task: Task) {
+	// 	const currentTasks = columnsInBoard.map((column) => {
+	// 		if(column[task.status]){
+	// 			return column.tasks;
+	// 		}
+	// 	});
 
-		if (!currentBoard) {
-			return;
-		}
+	// 	const updatedColumns = columnsInBoard.map((column) => {
+	// 		if(column[task.status]) {
+	// 			return {
+	// 				...column,
+	// 				tasks: [task]
+	// 			};
+	// 		}
 
-		const currentColumnIndex = currentBoard.columns.findIndex((column) => column.name.toUpperCase() === task.status);
-
-		currentBoard.columns[currentColumnIndex].tasks.push(task);
-
-		const updatedBoards = boards.map((board) => {
-			if (board.name === currentBoard.name) {
-				return currentBoard;
-			} else {
-				return board;
-			}
-		});
-
-		setBoards(updatedBoards);
-		console.log(task);
-	}
+	// 		return column;
+	// 	});
 
 
-	const onSubmit: SubmitHandler<Task> = (data: Task) => {
 
-		createNewTask({
-			title: data.title,
-			description: data.description,
-			status: data.status,
-			subtasks: data.subtasks ? data.subtasks.map((subtask) => {
-				return (
-					{
-						title: subtask.title,
-						isCompleted: false,
-						id: uuid()
-					}
-				);
-			}) : []
-		}, selectedBoard);
+	// 	const updatedTasks = [...currentTasks, task];
 
-		closeAddNewTaskModal();
-		reset();
-	};
+	// const updatedBoard: Board = {
+
+	// };
+
+	// selectedBoard.columns[currentColumnIndex].tasks.push(task);
+
+
+
+	// const updatedBoards = boards.map((board) => {
+	// 	if (board.name === selectedBoard.name) {
+	// 		return selectedBoard;
+	// 	} else {
+	// 		return board;
+	// 	}
+	// });
+
+	// 	setBoards(updatedBoards);
+	// 	console.log(task);
+	// }
+
+
+	// const onSubmit: SubmitHandler<Task> = (data: Task) => {
+	// 	// createNewTask({
+	// 	// 	title: data.title,
+	// 	// 	description: data.description,
+	// 	// 	status: data.status,
+	// 	// 	subtasks: data.subtasks ? data.subtasks.map((subtask) => {
+	// 	// 		return (
+	// 	// 			{
+	// 	// 				title: subtask.title,
+	// 	// 				isCompleted: false,
+	// 	// 				id: uuid()
+	// 	// 			}
+	// 	// 		);
+	// 	// 	}) : []
+	// 	// });
+
+	// 	closeAddNewTaskModal();
+	// 	reset();
+	// };
 
 	return(
 		<HeaderContainer>
@@ -107,13 +125,13 @@ export function Header({ isDarkTheme}: HeaderProps) {
 				<LogoContainer>
 					<img src={isDarkTheme ? kanbanLogoLight : kanbanLogoDark}/>
 				</LogoContainer>
-				<strong>{selectedBoard}</strong>
+				<strong>{selectedBoard?.name}</strong>
 			</div>
 			<ButtonsContainer>
-				<button onClick={handleOpenAddNewTaskModal} disabled={selectedBoard === ''}>+ Add new task</button>
+				<button disabled={!selectedBoard}>+ Add new task</button>
 				<img src={dotsIcon} title="Board settings" />
 			</ButtonsContainer>
-			{isAddNewTaskModalOpen && <Modal handleCloseModal={closeAddNewTaskModal}>
+			{/* {isAddNewTaskModalOpen && <Modal handleCloseModal={closeAddNewTaskModal}>
 				<div onClick={e => e.stopPropagation()}>
 					<header>
 						<strong>Add New Task</strong>
@@ -121,12 +139,12 @@ export function Header({ isDarkTheme}: HeaderProps) {
 					<FormContainer onSubmit={handleSubmit(onSubmit)}>
 						<InputContainer>
 							<small>Title</small>
-							<input type="text" {...register('title', {required: true})} />
+							<input type="text" {...register("title", {required: true})} />
 							{errors.title && <FieldError>Title is required!</FieldError>}
 						</InputContainer>
 						<InputContainer>
 							<small>Description</small>
-							<textarea {...register('description')}/>
+							<textarea {...register("description")}/>
 						</InputContainer>
 						<InputContainer>
 							<small>Subtasks</small>
@@ -143,7 +161,7 @@ export function Header({ isDarkTheme}: HeaderProps) {
 						</InputContainer>
 						<InputContainer>
 							<small>Status</small>
-							<select {...register('status')}>
+							<select {...register("status")}>
 								<option selected value="TODO">Todo</option>
 								<option value="DOING">Doing</option>
 								<option value="DONE">Done</option>
@@ -152,7 +170,7 @@ export function Header({ isDarkTheme}: HeaderProps) {
 						<button type='submit'>Create task</button>
 					</FormContainer>
 				</div>
-			</Modal>}
+			</Modal>} */}
 		</HeaderContainer>
 	);
 }

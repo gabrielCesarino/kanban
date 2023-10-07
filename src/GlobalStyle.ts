@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
 	:root{
@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
 
 `;
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const AppContainer = styled.div`
 	main {
