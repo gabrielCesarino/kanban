@@ -24,6 +24,8 @@ import { dashboards, selectedDashboard } from "../../atoms";
 import { Dashboard } from "../../types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "styled-components";
+import getClientInstance from "../../apolloClient";
+import { CreateDashboardDocument } from "../../graphql/mutations.codegen";
 
 interface SidebarProps {
 	handleSelectTheme: () => void;
@@ -60,33 +62,21 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 		setSelectedBoard(board);
 	}
 
-	const handleCreateNewBoard: SubmitHandler<Inputs> = (data: Inputs) =>{
-		// const newBoard: BoardType = {
-		// 	name: data.newBoardName,
-		// 	columns: [
-		// 		{
-		// 			name: 'TODO',
-		// 			tasks: []
-		// 		},
-		// 		{
-		// 			name: 'DOING',
-		// 			tasks: []
-		// 		},
-		// 		{
-		// 			name: 'DONE',
-		// 			tasks: []
-		// 		}]
-		// };
+	const handleCreateNewBoard: SubmitHandler<Inputs> = async(data: Inputs) =>{
+		const client = getClientInstance();
+		const newDashboard = {
+			name: data.newBoardName,
+			code: data.newBoardName,
+		};
 
-		// const boardAlreadyExists = boards.find((board) => board.name === newBoard.name);
+		await client.mutate(({
+			mutation: CreateDashboardDocument,
+			variables: {
+				name: newDashboard.name,
+				code: newDashboard.code
+			}
+		}));
 
-		// if(boardAlreadyExists) {
-		// 	setError('newBoardName', { type: 'boardAlreadyExists', message: `'${newBoard.name}' is already in use!` });
-		// 	return;
-		// }
-
-		// setBoards((state) => [...state, newBoard]);
-		// setSelectedBoard(newBoard);
 		closeAddNewBoardModal();
 	};
 

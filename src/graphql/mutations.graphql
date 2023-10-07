@@ -1,0 +1,6 @@
+mutation createDashboard($name: String!, $code: String!) {
+  createDashboard(name: $name, code: $code) {
+    name
+    id
+  }
+}
