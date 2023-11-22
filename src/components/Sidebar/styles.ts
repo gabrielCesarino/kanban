@@ -61,6 +61,8 @@ export const Board = styled.div`
 	align-items: center;
 	padding-left: 2rem;
 	overflow: hidden;
+	border-radius: 0 40px 40px 0;
+
 
 	&.createButton {
 		color: ${(props) => props.theme.colors["purple"]};

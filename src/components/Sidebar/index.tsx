@@ -84,7 +84,6 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 		<AsideContainer
 			as={motion.aside}
 			animate={hideSidebar ? "hide" : "showing"}
-			initial={hideSidebar ? "hide" : "showing"}
 			variants={{
 				"hide": {
 					width: 0,
@@ -116,11 +115,11 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 				{!hideSidebar ?
 					<InteractionsContainer
 						as={motion.div}
-						initial={{ x: -300}}
-						animate={{x: 0}}
-						exit={{ x: - 300}}
+						initial={false}
+						animate={{x: [-300, 0]}}
+						exit={{ x: -350}}
 						transition={{
-							duration: 0.25
+							duration: 0.5
 						}}
 					>
 						<div>
@@ -130,17 +129,16 @@ export function Sidebar({ handleSelectTheme, checked  }: SidebarProps) {
 									return availableDashboard && (
 										<Board
 											as={motion.div}
-											animate={availableDashboard === selectedBoard ? "active" : "false"}
-											initial={"false"}
+											initial={false}
+											animate={availableDashboard === selectedBoard ? "active" : "disabled"}
 											variants={{
 												"active": {
 													backgroundColor: theme.colors.purple,
-													borderRadius: "0 40px 40px 0",
 													color: theme.colors.white,
 												},
-												"false": {
+												"disabled": {
 													backgroundColor: theme.colors.primary,
-													borderRadius: "0 40px 40px 0",
+													color: theme.colors.text.secondary,
 												}
 											}}
 											transition={{ type: "spring", stiffness: 100 }}

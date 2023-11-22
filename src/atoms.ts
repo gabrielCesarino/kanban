@@ -1,5 +1,5 @@
-import { atom, selector } from "recoil";
-import { DashboardsDocument, IDashboardsQuery } from "./graphql/queries.codegen";
+import { atom, atomFamily, selector, selectorFamily } from "recoil";
+import { DashboardsDocument, GetColumnsForSelectedDashDocument, GetTasksForSelectedDashDocument, IDashboardsQuery, IGetColumnsForSelectedDashQuery, IGetTasksForSelectedDashQuery } from "./graphql/queries.codegen";
 import getClientInstance from "./apolloClient";
 import { Dashboard } from "./types";
 
@@ -35,3 +35,57 @@ export const selectedDashboard = atom<Dashboard | undefined | null>({
 	})
 });
 
+export const columnsOnSelectedDash = atomFamily<IGetColumnsForSelectedDashQuery["allColumns"], string>({
+	key: "columnsOnSelectedDash",
+	default: [],
+	effects: (dashboardID) => [
+		({setSelf, trigger}) => {
+			const loadColumns = async() => {
+				const {data} = await client.query(({
+					query: GetColumnsForSelectedDashDocument,
+					variables: {
+						dashboardID,
+					},
+				}));
+				setSelf(data.allColumns);
+			};
+
+			if(trigger === "get") {
+				loadColumns();
+			}
+		}
+	]
+});
+
+export const tasksOnSelectedDash = atomFamily<IGetTasksForSelectedDashQuery["allTasks"], string>({
+	key: "tasksOnSelectedDash",
+	effects: (dashboardID) => [
+		({setSelf, trigger}) => {
+			const loadColumns = async() => {
+				const { data } = await client.query(({
+					query: GetTasksForSelectedDashDocument,
+					variables: {
+						dashboardID,
+					},
+				}));
+				setSelf(data.allTasks);
+			};
+
+			if(trigger === "get") {
+				loadColumns();
+			}
+		}
+	]
+});
+
+export const tasksOnCorrelatedColumn = selectorFamily({
+	key: "tasksOnCorrelatedColumn",
+	get: (status: string) => ({get}) => {
+		const currentSelectedDashboard = get(selectedDashboard);
+		const tasks = get(tasksOnSelectedDash(currentSelectedDashboard!.id));
+
+		const availableTasks = tasks?.filter((task) => task?.status === status);
+
+		return availableTasks;
+	},
+});

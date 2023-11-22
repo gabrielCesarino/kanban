@@ -9,12 +9,7 @@ import { Board } from "./components/Board";
 import { Header } from "./components/Header";
 import { Sidebar } from "./components/Sidebar";
 import getClientInstance from "./apolloClient";
-
-const Loading = () => {
-	return (
-		<h1>...</h1>
-	);
-};
+import { Loading } from "./components/Loading";
 
 export function App() {
 	const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -39,8 +34,8 @@ export function App() {
 									checked={isDarkTheme}
 									handleSelectTheme={selectTheme}
 								/>
-								{/* <Board
-							/> */}
+								<Board
+								/>
 							</main>
 						</AppContainer>
 					</Suspense>

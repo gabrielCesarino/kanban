@@ -1,33 +1,23 @@
 import { useRecoilValue } from "recoil";
-import { Task } from "../Task";
 
-import { BoardContainer, BoardCollumn } from "./styles";
-import { dashboards, selectedDashboard } from "../../atoms";
+import { BoardContainer } from "./styles";
+import { columnsOnSelectedDash, selectedDashboard, tasksOnCorrelatedColumn } from "../../atoms";
+import { BoardColumn } from "./components/BoardColumn";
 
 export function Board() {
-	const availableDashboards = useRecoilValue(dashboards);
 	const selectedBoard = useRecoilValue(selectedDashboard);
+	const availableColumns = useRecoilValue(columnsOnSelectedDash(selectedBoard!.id));
 
 	return (
 		<BoardContainer>
-			{/* {selectedBoard.columns.map((column) => {
-				return (
-					<BoardCollumn key={column.name}>
-						<small>
-							{column.name} ({column.tasks ? column.tasks.length : '0'})
-						</small>
-						{column.tasks?.map((task: TaskType) => {
-							return (
-								<Task
-									key={task.title}
-									task={task}
-									currentBoard={selectedBoard}
-								/>
-							);
-						})}
-					</BoardCollumn>
-				);
-			})} */}
+			{availableColumns?.map((column) => {
+				if(column) {
+					return (
+						<BoardColumn currentColumn={column} key={column?.id} />
+					);
+				}
+
+			})}
 		</BoardContainer>
 	);
 }

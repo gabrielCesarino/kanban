@@ -1,13 +1,13 @@
 import { ModalContainer } from "./styles";
 import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { MotionProps, motion } from "framer-motion";
 
-interface TaskModalProps{
-	handleCloseModal: () => void;
+type TaskModalProps = MotionProps & {
+	handleCloseModal: () => void
 	children: JSX.Element
 }
 
-export function Modal({ handleCloseModal, children}: TaskModalProps) {
+export function Modal({ handleCloseModal, children, ...props}: TaskModalProps) {
 	useEffect(() => {
 		document.addEventListener("keyup", (e) => {
 			if(e.key === "Escape"){
@@ -23,9 +23,14 @@ export function Modal({ handleCloseModal, children}: TaskModalProps) {
 
 	return(
 		<>
-			<ModalContainer as={motion.div} initial={{ opacity: 0,}}
+			<ModalContainer
+				as={motion.div}
+				initial={{ opacity: 0}}
 				animate={{ opacity: 1 }}
-				exit={{ opacity: 0}} onClick={handleCloseModal}>
+				exit={{ opacity: 0}}
+				onClick={handleCloseModal}
+				{...props}
+			>
 				{children}
 			</ModalContainer>
 		</>

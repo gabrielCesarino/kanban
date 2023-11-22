@@ -5,3 +5,20 @@ query dashboards {
     code
   }
 }
+
+query getColumnsForSelectedDash($dashboardID: ID!) {
+  allColumns(filter: {dashboard_id: $dashboardID}) {
+    id
+    name
+  }
+}
+
+query getTasksForSelectedDash($dashboardID: ID!) {
+  allTasks(filter: {dashboard_id: $dashboardID}){
+    id
+    name
+    status
+    description
+		dashboard_id
+  }
+}
