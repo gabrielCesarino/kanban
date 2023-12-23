@@ -3,17 +3,24 @@ import { DashboardsDocument, GetColumnsForSelectedDashDocument, GetTasksForSelec
 import getClientInstance from "./apolloClient";
 import { Dashboard } from "./types";
 
-const client = getClientInstance();
+
+export async function getDashboards() {
+	const client = getClientInstance();
+
+	const { data } = await client.query({
+		query: DashboardsDocument
+	});
+
+	return data.allDashboards;
+}
 
 export const dashboards = atom<IDashboardsQuery["allDashboards"]>({
 	key: "dashboards",
 	effects: [
 		({setSelf, trigger}) => {
 			const loadDashboards = async() => {
-				const { data } =  await client.query({
-					query: DashboardsDocument
-				});
-				setSelf(data.allDashboards);
+				const dashboards = await getDashboards();
+				setSelf(dashboards);
 			};
 
 			if(trigger === "get"){
@@ -41,6 +48,7 @@ export const columnsOnSelectedDash = atomFamily<IGetColumnsForSelectedDashQuery[
 	effects: (dashboardID) => [
 		({setSelf, trigger}) => {
 			const loadColumns = async() => {
+				const client = getClientInstance();
 				const {data} = await client.query(({
 					query: GetColumnsForSelectedDashDocument,
 					variables: {
@@ -62,6 +70,7 @@ export const tasksOnSelectedDash = atomFamily<IGetTasksForSelectedDashQuery["all
 	effects: (dashboardID) => [
 		({setSelf, trigger}) => {
 			const loadColumns = async() => {
+				const client = getClientInstance();
 				const { data } = await client.query(({
 					query: GetTasksForSelectedDashDocument,
 					variables: {
